@@ -5,7 +5,7 @@ void Resolve<T>(int dayNumber) where T : IDay
     var lines = ReadInput(dayNumber);
 
     var partOneResult = T.PartOne(lines);
-    var partTwoResult = T.PartOne(lines);
+    var partTwoResult = T.PartTwo(lines);
 
     PrintToConsole(dayNumber, partOneResult, partTwoResult);
 }
