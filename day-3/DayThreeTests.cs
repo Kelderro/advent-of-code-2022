@@ -4,7 +4,7 @@ using FluentAssertions;
 public class DayThreeTests
 {
     [Fact]
-    public void PartOne_On_Return()
+    public void PartOne_OnRuckSacksWithDuplicateItems_ReturnTheIntersectCharScore()
     {
         var input = """
         vJrwpWtwJgWrhcsFMMfFFhFp
