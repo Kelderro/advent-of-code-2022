@@ -2,6 +2,7 @@
 name: Lint
 
 on:
+  push:
   pull_request:
     branches: [main]
 
@@ -18,6 +19,7 @@ jobs:
       - name: Run linters
         uses: github/super-linter@v4
         env:
+          VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: ${{ github.base_ref }}
           LINTER_RULES_PATH: /src/
           VALIDATE_ALL_CODEBASE: false
