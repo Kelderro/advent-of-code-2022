@@ -14,7 +14,7 @@ public sealed class DayTwo : IDay
     // Draw: 3
     // Win: 6
 
-    private static Dictionary<char, int> CalcInputScore = new() {
+    private static readonly Dictionary<char, int> CalcInputScore = new() {
         { 'X', 1 },
         { 'Y', 2 },
         { 'Z', 3 },

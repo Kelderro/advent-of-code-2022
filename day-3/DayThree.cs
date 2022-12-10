@@ -18,7 +18,7 @@ public sealed class DayThree : IDay
     public static int PartTwo(string[] lines)
     {
         var totalScore = 0;
-        for (int i = 0; i < lines.Count(); i = i + 3)
+        for (int i = 0; i < lines.Length; i += 3)
         {
             var inBoth = lines[i].Intersect(lines[i + 1])
                                  .Intersect(lines[i + 2])
@@ -33,7 +33,7 @@ public sealed class DayThree : IDay
     private static (string left, string right) SplitInHalf(string input)
     {
         var splitAt = input.Length / 2;
-        return (input.Substring(0, splitAt), input.Substring(splitAt));
+        return (input[..splitAt], input[splitAt..]);
     }
 
     private static int Score(IEnumerable<char> inBoth)
