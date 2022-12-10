@@ -32,4 +32,34 @@ public class DayTwoTests
         var result = DayTwo.PartOne(lines);
         result.Should().Be(expected);
     }
+
+    [Theory]
+    [InlineData(3, "A X")]
+    [InlineData(1, "B X")]
+    [InlineData(2, "C X")]
+    public void PartTwo_OnSecondColumnValueX_ReturnLosingScore(int expected, params string[] lines)
+    {
+        var result = DayTwo.PartTwo(lines);
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData(4, "A Y")]
+    [InlineData(5, "B Y")]
+    [InlineData(6, "C Y")]
+    public void PartTwo_OnSecondColumnValueY_ReturnDrawScore(int expected, params string[] lines)
+    {
+        var result = DayTwo.PartTwo(lines);
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData(8, "A Z")]
+    [InlineData(9, "B Z")]
+    [InlineData(7, "C Z")]
+    public void PartTwo_OnSecondColumnValueZ_ReturnWinScore(int expected, params string[] lines)
+    {
+        var result = DayTwo.PartTwo(lines);
+        result.Should().Be(expected);
+    }
 }
