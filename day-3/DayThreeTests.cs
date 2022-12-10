@@ -19,4 +19,21 @@ public class DayThreeTests
 
         result.Should().Be(157);
     }
+
+    [Fact]
+    public void PartTwo_OnRuckSack_Return()
+    {
+        var input = """
+        vJrwpWtwJgWrhcsFMMfFFhFp
+        jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+        PmmdzqPrVvPwwTWBwg
+        wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+        ttgJtRGJQctTZtZT
+        CrZsJsPPZsGzwwsLwLmpwMDw
+        """.Split(Environment.NewLine);
+
+        var result = DayThree.PartTwo(input);
+
+        result.Should().Be(70);
+    }
 }

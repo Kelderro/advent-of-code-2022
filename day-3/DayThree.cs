@@ -17,7 +17,17 @@ public sealed class DayThree : IDay
 
     public static int PartTwo(string[] lines)
     {
-        throw new NotImplementedException();
+        var totalScore = 0;
+        for (int i = 0; i < lines.Count(); i = i + 3)
+        {
+            var inBoth = lines[i].Intersect(lines[i + 1])
+                                 .Intersect(lines[i + 2])
+                                 .ToList();
+
+            totalScore += Score(inBoth);
+        }
+
+        return totalScore;
     }
 
     private static (string left, string right) SplitInHalf(string input)
