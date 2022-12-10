@@ -1,5 +1,6 @@
 ﻿Resolve<DayOne>(1);
 Resolve<DayTwo>(2);
+Resolve<DayThree>(3);
 
 void Resolve<T>(int dayNumber) where T : IDay
 {
