@@ -1,6 +1,6 @@
-public interface IDay
+public interface IDay<T>
 {
-    static abstract int PartOne(string[] lines);
+    static abstract T PartOne(string[] lines);
 
-    static abstract int PartTwo(string[] lines);
+    static abstract T PartTwo(string[] lines);
 }
