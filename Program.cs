@@ -2,6 +2,7 @@
 Resolve<DayTwo, int>(2);
 Resolve<DayThree, int>(3);
 Resolve<DayFour, int>(4);
+Resolve<DayFive, string>(5);
 
 void Resolve<DayType, ReturnType>(int dayNumber) where DayType : IDay<ReturnType>
 {
@@ -26,5 +27,5 @@ void PrintToConsole<ReturnType>(int dayNumber, ReturnType partOneResult, ReturnT
 
 string[] ReadInput(int dayNumber)
 {
-    return File.ReadAllLines($"./day-{dayNumber}/input.txt");
+    return File.ReadAllLines($"./src/day-{dayNumber}/input.txt");
 }
