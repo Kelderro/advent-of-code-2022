@@ -30,5 +30,5 @@ void PrintToConsole<ReturnType>(int dayNumber, ReturnType partOneResult, ReturnT
 
 string[] ReadInput(int dayNumber)
 {
-    return File.ReadAllLines($"./src/day-{dayNumber}/input.txt");
+    return File.ReadAllLines($"./src/day-{dayNumber:00}/input.txt");
 }
