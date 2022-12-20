@@ -38,6 +38,21 @@ public class DaySevenTests
     }
 
     [Fact]
+    public void PartOne_OnNavigationToNonExistingParent_ThrowsNotSupportedException()
+    {
+        var input = $"""
+        $ cd {Guid.NewGuid()}
+        $ cd ..
+        $ cd ..
+        """.Split(Environment.NewLine);
+
+        Action act = () => DaySeven.PartOne(input);
+
+        act.Should().Throw<InvalidOperationException>()
+                    .WithMessage($"The folder '/' has no parent folder.");
+    }
+
+    [Fact]
     public void PartTwo_OnExampleTestCase_ReturnTotalSizeOfAllDirectories()
     {
         var result = DaySeven.PartTwo(this.input);
