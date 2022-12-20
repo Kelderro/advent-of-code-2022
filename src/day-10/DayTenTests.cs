@@ -155,19 +155,86 @@ public class DayTenTests
     [Fact]
     public void PartOne_OnExampleTestCase_ReturnExpectedSignalStrength()
     {
-        var result = DayTen.PartOne(this.input);
+        var result = int.Parse(DayTen.PartOne(this.input));
 
         result.Should().Be(13140);
     }
 
     [Fact]
-    public void PartOne_OnExampleTestCase_ReturnExpectedSignalStrength2()
+    public void PartOne_OnUsingInputFile_ReturnExpectedSignalStrengthSolution()
     {
         var input = ReadInput(10);
 
-        var result = DayTen.PartOne(input);
+        var result = int.Parse(DayTen.PartOne(input));
 
-        result.Should().BeLessThan(30160); // Correct number is: 17020
+        result.Should().Be(17020);
+    }
+
+    [Fact]
+    public void PartTwo_OnSimpleExampleTestCase_ReturnCrtScreen()
+    {
+        var input = """
+        addx 15
+        addx -11
+        addx 6
+        addx -3
+        addx 5
+        addx -1
+        addx -8
+        addx 13
+        addx 4
+        noop
+        addx -1
+        """.Split(Environment.NewLine);
+
+        var result = DayTen.PartTwo(input);
+
+        result.Should().Be("""
+
+        ##..##..##..##..##..#...................
+        ........................................
+        ........................................
+        ........................................
+        ........................................
+        ........................................
+
+        """);
+    }
+
+    [Fact]
+    public void PartTwo_OnExampleTestCase_ReturnCrtScreen()
+    {
+        var result = DayTen.PartTwo(this.input);
+
+        result.Should().Be("""
+
+        ##..##..##..##..##..##..##..##..##..##..
+        ###...###...###...###...###...###...###.
+        ####....####....####....####....####....
+        #####.....#####.....#####.....#####.....
+        ######......######......######......####
+        #######.......#######.......#######.....
+
+        """);
+    }
+
+    [Fact]
+    public void PartTwo_OnUsingInputFile_ReturnCrtScreen()
+    {
+        var input = ReadInput(10);
+
+        var result = DayTen.PartTwo(input);
+
+        result.Should().Be("""
+        
+        ###..#....####.####.####.#.....##..#####
+        #..#.#....#.......#.#....#....#..#.#...#
+        #..#.#....###....#..###..#....#....###..
+        ###..#....#.....#...#....#....#.##.#..##
+        #.#..#....#....#....#....#....#..#.#..##
+        #..#.####.####.####.#....####..###.####.
+
+        """);
     }
 
     string[] ReadInput(int dayNumber)

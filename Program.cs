@@ -5,7 +5,7 @@ Resolve<DayFour, int>(4);
 Resolve<DayFive, string>(5);
 Resolve<DaySix, int>(6);
 Resolve<DaySeven, int>(7);
-Resolve<DayTen, int>(10);
+Resolve<DayTen, string>(10);
 
 void Resolve<DayType, ReturnType>(int dayNumber) where DayType : IDay<ReturnType>
 {
