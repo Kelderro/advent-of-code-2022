@@ -53,7 +53,7 @@ public sealed class DaySeven : IDay<int>
             root
         };
 
-        var currentFolder = root;
+        var folder = root;
 
         for (var i = 1; i < lines.Length; i++)
         {
@@ -61,26 +61,30 @@ public sealed class DaySeven : IDay<int>
             // List folder structure
             if (instruction.Equals("$ ls", StringComparison.InvariantCultureIgnoreCase))
             {
-                ListFilesAndFolders(lines, currentFolder, ref i, ref instruction);
+                ListFilesAndFolders(lines, folder, ref i, ref instruction);
                 continue;
             }
 
             if (instruction.Equals("$ cd .."))
             {
-                currentFolder = currentFolder.Parent;
+                if (folder.Parent == null)
+                {
+                    throw new InvalidOperationException($"The folder '{folder.Name}' has no parent folder.");
+                }
+                folder = folder.Parent;
                 continue;
             }
 
             if (instruction.StartsWith("$ cd "))
             {
-                currentFolder = ChangeFolder(folders, currentFolder, instruction);
+                folder = NavigateToFolder(folders, folder, instruction);
             }
         }
 
         return folders;
     }
 
-    private static void ListFilesAndFolders(string[] lines, Folder? currentFolder, ref int i, ref string instruction)
+    private static void ListFilesAndFolders(string[] lines, Folder folder, ref int i, ref string instruction)
     {
         // Continue till next command
         while (lines.Length > i + 1 && !lines[i + 1].StartsWith("$"))
@@ -92,11 +96,11 @@ public sealed class DaySeven : IDay<int>
             {
                 continue;
             }
-            currentFolder.FileSize += int.Parse(instruction.Split(' ')[0]);
+            folder.FileSize += int.Parse(instruction.Split(' ')[0]);
         }
     }
 
-    private static Folder ChangeFolder(List<Folder> folders, Folder fromFolder, string instruction)
+    private static Folder NavigateToFolder(List<Folder> folders, Folder fromFolder, string instruction)
     {
         var gotoFolder = instruction.Substring(5);
         if (!fromFolder.Children.ContainsKey(gotoFolder))
@@ -112,40 +116,5 @@ public sealed class DaySeven : IDay<int>
         }
         fromFolder = fromFolder.Children[gotoFolder];
         return fromFolder;
-    }
-
-    public class Folder
-    {
-        public Folder()
-        {
-            Children = new Dictionary<string, Folder>();
-        }
-
-        public required string Name { get; init; }
-
-        public Folder? Parent { get; set; }
-
-        public Dictionary<string, Folder> Children { get; set; }
-
-        public int FileSize { get; set; }
-
-        public int TotalSize
-        {
-            get
-            {
-                var total = FileSize;
-
-                foreach (var child in this.Children.Values)
-                {
-                    total += child.TotalSize;
-                }
-                return total;
-            }
-        }
-
-        public override string ToString()
-        {
-            return $"{Name} - {TotalSize}";
-        }
     }
 }
