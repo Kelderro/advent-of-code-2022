@@ -1,9 +1,9 @@
-using Xunit;
 using FluentAssertions;
+using Xunit;
 
 public class DaySevenTests
 {
-    private string[] input = """
+    private readonly string[] input = """
         $ cd /
         $ ls
         dir a

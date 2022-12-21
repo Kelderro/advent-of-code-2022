@@ -1,6 +1,7 @@
+
 /// <summary>
 /// https://adventofcode.com/2022/day/5
-/// Ugly code - Definitly need some optimization later on!
+/// Code requires refactoring in a later stage.
 /// </summary>
 public sealed class DayFive : IDay<string>
 {
@@ -56,11 +57,12 @@ public sealed class DayFive : IDay<string>
 
     private static string GetSolution(List<Stack<char>> stacks)
     {
-        var result = "";
+        var result = string.Empty;
         foreach (var stack in stacks)
         {
             result += stack.Peek();
         }
+
         return result;
     }
 
@@ -78,6 +80,7 @@ public sealed class DayFive : IDay<string>
                 stacks[to - 1].Push(stacks[from - 1].Pop());
             }
         }
+
         return stacks;
     }
 
@@ -121,6 +124,7 @@ public sealed class DayFive : IDay<string>
                 {
                     stacks[count].Push(cellValue);
                 }
+
                 count++;
                 columnNumber += 4;
             }

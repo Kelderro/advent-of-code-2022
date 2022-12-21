@@ -31,8 +31,10 @@ public sealed class DayOne : IDay<int>
                 count++;
                 continue;
             }
+
             amount += int.Parse(line);
         }
+
         elves.Add(amount);
         return elves;
     }

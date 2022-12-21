@@ -1,16 +1,15 @@
 using System.Text;
 
 /// <summary>
-/// https://adventofcode.com/2022/day/10
+/// https://adventofcode.com/2022/day/10.
 /// </summary>
 public sealed class DayTen : IDay<string>
 {
-    #region Part One
     /// <summary>
-    /// Find the signal strength during the 20th, 60th, 100th, 140th, 180th, and 220th cycles. What is the sum of these six signal strengths?
+    /// Find the signal strength during the 20th, 60th, 100th, 140th, 180th, and 220th cycles.
     /// </summary>
-    /// <param name="lines">Instructions</param>
-    /// <returns>Sum of the six signal strengths</returns>
+    /// <param name="lines">Instructions.</param>
+    /// <returns>Sum of the six signal strengths.</returns>
     public static string PartOne(string[] lines)
     {
         var totalSignalStrength = 0;
@@ -42,25 +41,6 @@ public sealed class DayTen : IDay<string>
         return totalSignalStrength.ToString();
     }
 
-    /// <summary>
-    /// Calculate the cycle signal strength only for the 20th, 60th, 100th,
-    /// 140th, 180th, and 220th cycle.
-    /// </summary>
-    /// <param name="register">Current value of the register (X)</param>
-    /// <param name="cycle">CPU cycle</param>
-    /// <returns>0 when the cycle is not the 20th, 60th, 100th, 140th, 180th
-    /// or 220th cycle. Otherwise returns the product of cycle * register.
-    /// </returns>
-    private static int CalculateCycleSignalStrength(int register, int cycle)
-    {
-        if (cycle > 220 || cycle != 20 && (cycle - 20) % 40 != 0)
-            return 0;
-
-        return cycle * register;
-    }
-    #endregion
-
-    #region Part Two
     public static string PartTwo(string[] lines)
     {
         // The sprite is three pixels wide
@@ -72,7 +52,7 @@ public sealed class DayTen : IDay<string>
         var crtScreen = new bool[6, 40];
 
         WriteToLog($"Sprite position: {ToSprite(register)}");
-        WriteToLog("");
+        WriteToLog(string.Empty);
 
         foreach (var line in lines)
         {
@@ -103,7 +83,8 @@ public sealed class DayTen : IDay<string>
             {
                 WriteToLog($"End of cycle  {cycle}: finish executing noop");
             }
-            WriteToLog("");
+
+            WriteToLog(string.Empty);
 
             cycle++;
         }
@@ -111,6 +92,25 @@ public sealed class DayTen : IDay<string>
         var result = CrtToString(crtScreen);
 
         return result;
+    }
+
+    /// <summary>
+    /// Calculate the cycle signal strength only for the 20th, 60th, 100th,
+    /// 140th, 180th, and 220th cycle.
+    /// </summary>
+    /// <param name="register">Current value of the register (X).</param>
+    /// <param name="cycle">CPU cycle.</param>
+    /// <returns>0 when the cycle is not the 20th, 60th, 100th, 140th, 180th
+    /// or 220th cycle. Otherwise returns the product of cycle * register.
+    /// </returns>
+    private static int CalculateCycleSignalStrength(int register, int cycle)
+    {
+        if (cycle > 220 || (cycle != 20 && (cycle - 20) % 40 != 0))
+        {
+            return 0;
+        }
+
+        return cycle * register;
     }
 
     private static string ToSprite(int value)
@@ -129,8 +129,10 @@ public sealed class DayTen : IDay<string>
             {
                 stringBuilder.Append(crtScreen[scanLine, i] ? "#" : ".");
             }
+
             stringBuilder.Append(Environment.NewLine);
         }
+
         return stringBuilder.ToString();
     }
 
@@ -146,7 +148,7 @@ public sealed class DayTen : IDay<string>
             return;
         }
 
-        var remainder = Math.Abs((cycle % 40 - 1) - register);
+        var remainder = Math.Abs(((cycle % 40) - 1) - register);
         if (remainder == 0 || remainder == 1 || remainder == 39)
         {
             crtScreen[scanLine, (cycle - 1) % 40] = true;
@@ -159,5 +161,4 @@ public sealed class DayTen : IDay<string>
         Console.WriteLine(logMsg);
 #endif
     }
-    #endregion
 }

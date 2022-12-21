@@ -3,7 +3,7 @@ using Xunit;
 
 public class DayEleventTests
 {
-    private string[] unitTestInput = """
+    private readonly string[] unitTestInput = """
     Monkey 0:
       Starting items: 79, 98
       Operation: new = old * 19
@@ -69,7 +69,7 @@ public class DayEleventTests
         result.Should().Be(17408399184);
     }
 
-    string[] ReadInput(int dayNumber)
+    private static string[] ReadInput(int dayNumber)
     {
         return File.ReadAllLines($"./src/day-{dayNumber}/input.txt");
     }

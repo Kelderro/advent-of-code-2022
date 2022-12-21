@@ -13,8 +13,8 @@ public sealed class DayTwo : IDay<int>
     // Lose: 0
     // Draw: 3
     // Win: 6
-
-    private static Dictionary<char, int> CalcInputScore = new() {
+    private static readonly Dictionary<char, int> CalcInputScore = new()
+    {
         { 'X', 1 },
         { 'Y', 2 },
         { 'Z', 3 },
@@ -27,6 +27,7 @@ public sealed class DayTwo : IDay<int>
         {
             total += Score(line[0], line[2]);
         }
+
         return total;
     }
 
@@ -43,7 +44,6 @@ public sealed class DayTwo : IDay<int>
         // X: Lose
         // Y: Draw
         // Z: Win
-
         var total = 0;
         foreach (var line in lines)
         {
@@ -52,6 +52,7 @@ public sealed class DayTwo : IDay<int>
 
             total += Score(otherPlayerInput, playSymbol);
         }
+
         return total;
     }
 
@@ -90,7 +91,8 @@ public sealed class DayTwo : IDay<int>
             return 3;
         }
 
-        var losePlaying = new Dictionary<char, char> {
+        var losePlaying = new Dictionary<char, char>
+        {
             { 'A', 'Z' },
             { 'B', 'X' },
             { 'C', 'Y' },
@@ -102,6 +104,7 @@ public sealed class DayTwo : IDay<int>
         {
             return 0;
         }
+
         return 6;
     }
 }

@@ -8,7 +8,8 @@ Resolve<DaySeven, int>(7);
 Resolve<DayTen, string>(10);
 Resolve<DayElevent, long>(11);
 
-void Resolve<DayType, ReturnType>(int dayNumber) where DayType : IDay<ReturnType>
+void Resolve<DayType, ReturnType>(int dayNumber)
+    where DayType : IDay<ReturnType>
 {
     var lines = ReadInput(dayNumber);
 

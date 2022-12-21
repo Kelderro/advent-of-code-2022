@@ -2,7 +2,7 @@ public class Folder
 {
     public Folder()
     {
-        Children = new Dictionary<string, Folder>();
+        this.Children = new Dictionary<string, Folder>();
     }
 
     public required string Name { get; init; }
@@ -17,18 +17,19 @@ public class Folder
     {
         get
         {
-            var total = FileSize;
+            var total = this.FileSize;
 
             foreach (var child in this.Children.Values)
             {
                 total += child.TotalSize;
             }
+
             return total;
         }
     }
 
     public override string ToString()
     {
-        return $"{Name} - {TotalSize}";
+        return $"{this.Name} - {this.TotalSize}";
     }
 }

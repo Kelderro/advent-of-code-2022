@@ -3,7 +3,7 @@ using Xunit;
 
 public class DayTenTests
 {
-    private string[] input = """
+    private readonly string[] input = """
     addx 15
     addx -11
     addx 6
@@ -237,9 +237,8 @@ public class DayTenTests
         """);
     }
 
-    string[] ReadInput(int dayNumber)
+    private static string[] ReadInput(int dayNumber)
     {
         return File.ReadAllLines($"./src/day-{dayNumber}/input.txt");
     }
-
 }
