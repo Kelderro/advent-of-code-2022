@@ -4,7 +4,7 @@ public class Monkey
     /// Lists your worry level for each item the monkey is currently holding
     /// in the order they will be inspected.
     /// </summary>
-    public Queue<int> Items { get; init; }
+    public Queue<long> Items { get; init; }
 
     /// <summary>
     /// Total number of times by the monkey
@@ -17,7 +17,9 @@ public class Monkey
     /// after the monkey inspected the item is five times whatever your worry
     /// level was before inspection.)
     /// </summary>
-    public Func<int, int> Operation { get; init; }
+    public Func<long, long> WorryFunction { get; init; }
+
+    public int DivisibleBy { get; init; }
 
     /// <summary>
     /// Test shows how the monkey uses your worry level to decide where to
@@ -25,7 +27,7 @@ public class Monkey
     /// Test was true. If false shows what happens with an item if the Test
     /// was false.
     /// </summary>
-    public Func<int, int> ThrowToNext { get; init; }
+    public Func<long, int> ThrowToNext { get; init; }
 
     /// <summary>
     /// If true shows what happens with an item if the Test was true.
@@ -40,20 +42,21 @@ public class Monkey
     public Monkey(string[] monkeyDescription)
     {
         this.Items = ParseStartingItems(monkeyDescription[0]);
-        this.Operation = ParseOperation(monkeyDescription[1]);
+        this.WorryFunction = ParseOperation(monkeyDescription[1]);
+        this.DivisibleBy = ParseDivisibleBy(monkeyDescription[2]);
         this.ThrowToNext = ParseThrowToNextTest(monkeyDescription[2]);
         this.TrueThrowTo = ParseThrowTo(monkeyDescription[3]);
         this.FalseThrowTo = ParseThrowTo(monkeyDescription[4]);
     }
 
-    private Queue<int> ParseStartingItems(string line)
+    private Queue<long> ParseStartingItems(string line)
     {
         var startingItems = line.Split(':')[1].Trim();
-        return new Queue<int>(startingItems.Split(',')
-                            .Select(int.Parse));
+        return new Queue<long>(startingItems.Split(',')
+                            .Select(long.Parse));
     }
 
-    private Func<int, int> ParseOperation(string line)
+    private Func<long, long> ParseOperation(string line)
     {
         var operatorPart = line.Substring(line.IndexOf("old ") + 4, 1)[0];
 
@@ -86,11 +89,14 @@ public class Monkey
         }
     }
 
-    private Func<int, int> ParseThrowToNextTest(string line)
+    private int ParseDivisibleBy(string line)
     {
-        var divisibleBy = int.Parse(line.Substring(line.LastIndexOf(' ') + 1));
+        return int.Parse(line.Substring(line.LastIndexOf(' ') + 1));
+    }
 
-        return (worryLevel) => worryLevel % divisibleBy == 0
+    private Func<long, int> ParseThrowToNextTest(string line)
+    {
+        return (worryLevel) => worryLevel % this.DivisibleBy == 0
             ? this.TrueThrowTo
             : this.FalseThrowTo;
     }

@@ -51,6 +51,24 @@ public class DayEleventTests
         result.Should().Be(62491);
     }
 
+    [Fact]
+    public void PartTwo_OnExampleTestCase_ReturnMonkeyBusinessAmount()
+    {
+        var result = DayElevent.PartTwo(this.unitTestInput);
+
+        result.Should().Be(2713310158);
+    }
+
+    [Fact]
+    public void PartTwo_OnUsingInputFile_ReturnMonkeyBusinessAmount()
+    {
+        var fileInput = ReadInput(11);
+
+        var result = DayElevent.PartTwo(fileInput);
+
+        result.Should().Be(17408399184);
+    }
+
     string[] ReadInput(int dayNumber)
     {
         return File.ReadAllLines($"./src/day-{dayNumber}/input.txt");
