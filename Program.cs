@@ -1,11 +1,11 @@
-    ﻿Resolve<DayOne, int>(1);
+Resolve<DayOne, int>(1);
 Resolve<DayTwo, int>(2);
 Resolve<DayThree, int>(3);
 Resolve<DayFour, int>(4);
 Resolve<DayFive, string>(5);
 Resolve<DaySix, int>(6);
 Resolve<DaySeven, int>(7);
-Resolve<DayTen, string>(10)    ;
+Resolve<DayTen, string>(10);
 Resolve<DayElevent, long>(11);
 
 void Resolve<DayType, ReturnType>(int dayNumber) where DayType : IDay<ReturnType>
