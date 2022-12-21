@@ -5,7 +5,7 @@ using Xunit;
 
 public class DaySevenTests
 {
-    private readonly string[] input = """
+    private readonly string[] unitTestInput = """
         $ cd /
         $ ls
         dir a
@@ -34,7 +34,7 @@ public class DaySevenTests
     [Fact]
     public void PartOne_OnExampleTestCase_ReturnTotalSizeOfAllDirectories()
     {
-        var result = DaySeven.PartOne(this.input);
+        var result = DaySeven.PartOne(this.unitTestInput);
 
         result.Should().Be(95437);
     }
@@ -42,13 +42,13 @@ public class DaySevenTests
     [Fact]
     public void PartOne_OnNavigationToNonExistingParent_ThrowsNotSupportedException()
     {
-        var input = $"""
+        var testSpecificInput = $"""
         $ cd {Guid.NewGuid()}
         $ cd ..
         $ cd ..
         """.Split(Environment.NewLine);
 
-        Action act = () => DaySeven.PartOne(input);
+        Action act = () => DaySeven.PartOne(testSpecificInput);
 
         act.Should().Throw<InvalidOperationException>()
                     .WithMessage($"The folder '/' has no parent folder.");
@@ -57,7 +57,7 @@ public class DaySevenTests
     [Fact]
     public void PartTwo_OnExampleTestCase_ReturnTotalSizeOfAllDirectories()
     {
-        var result = DaySeven.PartTwo(this.input);
+        var result = DaySeven.PartTwo(this.unitTestInput);
 
         result.Should().Be(24933642);
     }

@@ -6,60 +6,32 @@ using Xunit;
 public class DayTwoTests
 {
     [Theory]
-    [InlineData(1, "B X")]
-    [InlineData(2, "C Y")]
-    [InlineData(3, "A Z")]
-    public void PartOne_OnLose_ReturnLoseScoreWithSymbolScore(int expected, params string[] lines)
+    [InlineData(1, "B X")] // Lose score
+    [InlineData(2, "C Y")] // Lose score
+    [InlineData(3, "A Z")] // Lose score
+    [InlineData(4, "A X")] // Draw score
+    [InlineData(5, "B Y")] // Draw score
+    [InlineData(6, "C Z")] // Draw score
+    [InlineData(7, "C X")] // Win score
+    [InlineData(8, "A Y")] // Win score
+    [InlineData(9, "B Z")] // Win score
+    public void PartOne_OnWin_ReturnWithSymbolScore(int expected, params string[] lines)
     {
         var result = DayTwo.PartOne(lines);
         result.Should().Be(expected);
     }
 
     [Theory]
-    [InlineData(4, "A X")]
-    [InlineData(5, "B Y")]
-    [InlineData(6, "C Z")]
-    public void PartOne_OnDraw_ReturnDrawScoreWithSymbolScore(int expected, params string[] lines)
-    {
-        var result = DayTwo.PartOne(lines);
-        result.Should().Be(expected);
-    }
-
-    [Theory]
-    [InlineData(7, "C X")]
-    [InlineData(8, "A Y")]
-    [InlineData(9, "B Z")]
-    public void PartOne_OnWin_ReturnWinScoreWithSymbolScore(int expected, params string[] lines)
-    {
-        var result = DayTwo.PartOne(lines);
-        result.Should().Be(expected);
-    }
-
-    [Theory]
-    [InlineData(3, "A X")]
-    [InlineData(1, "B X")]
-    [InlineData(2, "C X")]
-    public void PartTwo_OnSecondColumnValueX_ReturnLosingScore(int expected, params string[] lines)
-    {
-        var result = DayTwo.PartTwo(lines);
-        result.Should().Be(expected);
-    }
-
-    [Theory]
-    [InlineData(4, "A Y")]
-    [InlineData(5, "B Y")]
-    [InlineData(6, "C Y")]
-    public void PartTwo_OnSecondColumnValueY_ReturnDrawScore(int expected, params string[] lines)
-    {
-        var result = DayTwo.PartTwo(lines);
-        result.Should().Be(expected);
-    }
-
-    [Theory]
-    [InlineData(8, "A Z")]
-    [InlineData(9, "B Z")]
-    [InlineData(7, "C Z")]
-    public void PartTwo_OnSecondColumnValueZ_ReturnWinScore(int expected, params string[] lines)
+    [InlineData(3, "A X")] // Losing score
+    [InlineData(1, "B X")] // Losing score
+    [InlineData(2, "C X")] // Losing score
+    [InlineData(4, "A Y")] // Draw score
+    [InlineData(5, "B Y")] // Draw score
+    [InlineData(6, "C Y")] // Draw score
+    [InlineData(8, "A Z")] // Win score
+    [InlineData(9, "B Z")] // Win score
+    [InlineData(7, "C Z")] // Win score
+    public void PartTwo_OnSecondColumnValue_ReturnWithSymbolScore(int expected, params string[] lines)
     {
         var result = DayTwo.PartTwo(lines);
         result.Should().Be(expected);

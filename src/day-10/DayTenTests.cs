@@ -5,7 +5,7 @@ using Xunit;
 
 public class DayTenTests
 {
-    private readonly string[] input = """
+    private readonly string[] unitTestInput = """
     addx 15
     addx -11
     addx 6
@@ -157,7 +157,7 @@ public class DayTenTests
     [Fact]
     public void PartOne_OnExampleTestCase_ReturnExpectedSignalStrength()
     {
-        var result = int.Parse(DayTen.PartOne(this.input));
+        var result = int.Parse(DayTen.PartOne(this.unitTestInput));
 
         result.Should().Be(13140);
     }
@@ -165,9 +165,9 @@ public class DayTenTests
     [Fact]
     public void PartOne_OnUsingInputFile_ReturnExpectedSignalStrengthSolution()
     {
-        var input = ReadInput(10);
+        var fileInput = ReadInput(10);
 
-        var result = int.Parse(DayTen.PartOne(input));
+        var result = int.Parse(DayTen.PartOne(fileInput));
 
         result.Should().Be(17020);
     }
@@ -175,7 +175,7 @@ public class DayTenTests
     [Fact]
     public void PartTwo_OnSimpleExampleTestCase_ReturnCrtScreen()
     {
-        var input = """
+        var testSpecificInput = """
         addx 15
         addx -11
         addx 6
@@ -189,7 +189,7 @@ public class DayTenTests
         addx -1
         """.Split(Environment.NewLine);
 
-        var result = DayTen.PartTwo(input);
+        var result = DayTen.PartTwo(testSpecificInput);
 
         result.Should().Be("""
 
@@ -206,7 +206,7 @@ public class DayTenTests
     [Fact]
     public void PartTwo_OnExampleTestCase_ReturnCrtScreen()
     {
-        var result = DayTen.PartTwo(this.input);
+        var result = DayTen.PartTwo(this.unitTestInput);
 
         result.Should().Be("""
 
@@ -223,9 +223,9 @@ public class DayTenTests
     [Fact]
     public void PartTwo_OnUsingInputFile_ReturnCrtScreen()
     {
-        var input = ReadInput(10);
+        var fileInput = ReadInput(10);
 
-        var result = DayTen.PartTwo(input);
+        var result = DayTen.PartTwo(fileInput);
 
         result.Should().Be("""
         
