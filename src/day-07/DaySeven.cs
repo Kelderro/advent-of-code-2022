@@ -30,7 +30,6 @@ public sealed class DaySeven : IDay<int>
     {
         var totalSpaceDiskDrive = 70000000;
         var requiredSpaceFree = 30000000;
-        var freeUpAtLeast = totalSpaceDiskDrive - requiredSpaceFree;
 
         var folders = FollowInstructions(lines);
 
@@ -39,8 +38,7 @@ public sealed class DaySeven : IDay<int>
         var unusedSpace = totalSpaceDiskDrive - totalSpaceClaimed;
         var reclaimSpace = requiredSpaceFree - unusedSpace;
 
-        return orderedFolders.Where(x => x.TotalSize >= reclaimSpace)
-                             .Last()
+        return orderedFolders.Last(x => x.TotalSize >= reclaimSpace)
                              .TotalSize;
     }
 

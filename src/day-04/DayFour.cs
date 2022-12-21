@@ -20,7 +20,6 @@ public sealed class DayFour : IDay<int>
              || !secondElfAssignment.Except(firstElfAssignment).Any())
             {
                 total++;
-                continue;
             }
         }
 
