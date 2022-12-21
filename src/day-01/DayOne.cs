@@ -1,4 +1,4 @@
-public sealed class DayOne : IDay
+public sealed class DayOne : IDay<int>
 {
     public static int PartOne(string[] lines)
     {

@@ -1,7 +1,7 @@
 /// <summary>
 /// https://adventofcode.com/2022/day/3
 /// </summary>
-public sealed class DayThree : IDay
+public sealed class DayThree : IDay<int>
 {
     public static int PartOne(string[] lines)
     {

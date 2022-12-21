@@ -5,6 +5,9 @@ on:
   push:
   pull_request:
     branches: [main]
+    paths:
+      - "**.cs"
+      - ".editorcobfing"
 
 jobs:
   build:
@@ -13,9 +16,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
         with:
-          # Ensure full list of changed files within `super-linter`
-          fetch-depth: 0
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Install dotnet-format tool
+        run: dotnet tool install -g dotnet-format
+      - name: Run dotnet format
+         run: dotnet format '.\' --folder --check --verbosity diagnostic
+
+
       - name: Run linters
         uses: github/super-linter@v4
         env:

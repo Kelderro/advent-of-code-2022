@@ -1,4 +1,4 @@
-public sealed class DayTwo : IDay
+public sealed class DayTwo : IDay<int>
 {
     // First column
     // A: Rock

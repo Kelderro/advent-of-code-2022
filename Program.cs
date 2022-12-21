@@ -1,19 +1,23 @@
-﻿Resolve<DayOne>(1);
-Resolve<DayTwo>(2);
-Resolve<DayThree>(3);
-Resolve<DayFour>(4);
+﻿Resolve<DayOne, int>(1);
+Resolve<DayTwo, int>(2);
+Resolve<DayThree, int>(3);
+Resolve<DayFour, int>(4);
+Resolve<DayFive, string>(5);
+Resolve<DaySix, int>(6);
+Resolve<DaySeven, int>(7);
+Resolve<DayTen, string>(10);
 
-void Resolve<T>(int dayNumber) where T : IDay
+void Resolve<DayType, ReturnType>(int dayNumber) where DayType : IDay<ReturnType>
 {
     var lines = ReadInput(dayNumber);
 
-    var partOneResult = T.PartOne(lines);
-    var partTwoResult = T.PartTwo(lines);
+    var partOneResult = DayType.PartOne(lines);
+    var partTwoResult = DayType.PartTwo(lines);
 
     PrintToConsole(dayNumber, partOneResult, partTwoResult);
 }
 
-void PrintToConsole(int dayNumber, int partOneResult, int partTwoResult)
+void PrintToConsole<ReturnType>(int dayNumber, ReturnType partOneResult, ReturnType partTwoResult)
 {
     Console.WriteLine($"""
     #########################################
@@ -26,5 +30,5 @@ void PrintToConsole(int dayNumber, int partOneResult, int partTwoResult)
 
 string[] ReadInput(int dayNumber)
 {
-    return File.ReadAllLines($"./day-{dayNumber}/input.txt");
+    return File.ReadAllLines($"./src/day-{dayNumber:00}/input.txt");
 }
