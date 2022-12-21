@@ -48,7 +48,7 @@ public class Monkey
     public int DivisibleBy { get; init; }
 
     /// <summary>
-    /// Gets the function that test if the worry level can be divided by the 
+    /// Gets the function that test if the worry level can be divided by the
     /// DivisibleBy property. If true shows what happens with an item if the
     /// Test was true. If false shows what happens with an item if the Test
     /// was false.
@@ -118,18 +118,6 @@ public class Monkey
     }
 
     /// <summary>
-    /// Determine if the worry level can be divided by the DivisibleBy property.
-    /// Based on the boolean outcome return the throw to value.
-    /// </summary>
-    /// <returns>Returns the monkey number to throw to.</returns>
-    private Func<long, int> ParseThrowToNextTest()
-    {
-        return (worryLevel) => worryLevel % this.DivisibleBy == 0
-            ? this.TrueThrowTo
-            : this.FalseThrowTo;
-    }
-
-    /// <summary>
     /// Convert the throw to line to the monkey number.
     /// Sample input: If true: throw to monkey 2
     ///               If false: throw to monkey 0.
@@ -140,5 +128,17 @@ public class Monkey
     {
         // Transform "If true: throw to monkey 2" to 2
         return int.Parse(throwToLine[(throwToLine.LastIndexOf(' ') + 1)..]);
+    }
+
+    /// <summary>
+    /// Determine if the worry level can be divided by the DivisibleBy property.
+    /// Based on the boolean outcome return the throw to value.
+    /// </summary>
+    /// <returns>Returns the monkey number to throw to.</returns>
+    private Func<long, int> ParseThrowToNextTest()
+    {
+        return (worryLevel) => worryLevel % this.DivisibleBy == 0
+            ? this.TrueThrowTo
+            : this.FalseThrowTo;
     }
 }
