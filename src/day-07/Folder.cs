@@ -1,3 +1,5 @@
+namespace Aoc.Year2022.Day07;
+
 public class Folder
 {
     public Folder()
@@ -5,7 +7,7 @@ public class Folder
         this.Children = new Dictionary<string, Folder>();
     }
 
-    public required string Name { get; init; }
+    required public string Name { get; init; }
 
     public Folder? Parent { get; set; }
 

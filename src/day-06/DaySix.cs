@@ -1,7 +1,9 @@
-
 /// <summary>
 /// https://adventofcode.com/2022/day/6.
 /// </summary>
+
+namespace Aoc.Year2022.Day06;
+
 public sealed class DaySix : IDay<int>
 {
     public static int PartOne(string[] lines)

@@ -1,8 +1,10 @@
-
 /// <summary>
 /// https://adventofcode.com/2022/day/5
 /// Code requires refactoring in a later stage.
 /// </summary>
+
+namespace Aoc.Year2022.Day05;
+
 public sealed class DayFive : IDay<string>
 {
     public static string PartOne(string[] lines)
@@ -84,7 +86,7 @@ public sealed class DayFive : IDay<string>
         return stacks;
     }
 
-    private static (string[] stacks, string[] movements) Split(string[] lines)
+    private static (string[] Stacks, string[] Movements) Split(string[] lines)
     {
         var splitBy = 0;
         while (lines[splitBy].Length != 0)

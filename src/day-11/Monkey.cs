@@ -1,3 +1,5 @@
+namespace Aoc.Year2022.Day11;
+
 public class Monkey
 {
     /// <summary>

@@ -1,3 +1,5 @@
+namespace Aoc.Year2022.Day02;
+
 public sealed class DayTwo : IDay<int>
 {
     // First column
@@ -60,13 +62,15 @@ public sealed class DayTwo : IDay<int>
     {
         var otherPlayerCharInt = (char)(int)line[0] + ('X' - 'A');
 
-        if (line[2] == 'X') // Need to lose
+        // Check if player need to make a losing move
+        if (line[2] == 'X')
         {
             var losingChar = otherPlayerCharInt - 1;
             return (losingChar == 87) ? 'Z' : (char)losingChar;
         }
 
-        if (line[2] == 'Y') // Play a draw
+        // Check if player need to make a move that end up in a draw
+        if (line[2] == 'Y')
         {
             return (char)otherPlayerCharInt;
         }

@@ -1,3 +1,5 @@
+namespace Aoc.Year2022.Day05;
+
 using FluentAssertions;
 using Xunit;
 

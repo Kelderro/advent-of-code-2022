@@ -1,7 +1,9 @@
-
 /// <summary>
 /// https://adventofcode.com/2022/day/3.
 /// </summary>
+
+namespace Aoc.Year2022.Day03;
+
 public sealed class DayThree : IDay<int>
 {
     public static int PartOne(string[] lines)
@@ -32,7 +34,7 @@ public sealed class DayThree : IDay<int>
         return totalScore;
     }
 
-    private static (string left, string right) SplitInHalf(string input)
+    private static (string Left, string Right) SplitInHalf(string input)
     {
         var splitAt = input.Length / 2;
         return (input[..splitAt], input[splitAt..]);

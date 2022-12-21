@@ -1,7 +1,9 @@
-
 /// <summary>
 /// https://adventofcode.com/2022/day/7.
 /// </summary>
+
+namespace Aoc.Year2022.Day07;
+
 public sealed class DaySeven : IDay<int>
 {
     /// <summary>

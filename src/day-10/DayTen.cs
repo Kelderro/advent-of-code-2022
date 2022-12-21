@@ -1,8 +1,11 @@
-using System.Text;
-
 /// <summary>
 /// https://adventofcode.com/2022/day/10.
 /// </summary>
+
+namespace Aoc.Year2022.Day10;
+
+using System.Text;
+
 public sealed class DayTen : IDay<string>
 {
     /// <summary>

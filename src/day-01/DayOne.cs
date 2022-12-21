@@ -1,3 +1,5 @@
+namespace Aoc.Year2022.Day01;
+
 public sealed class DayOne : IDay<int>
 {
     public static int PartOne(string[] lines)

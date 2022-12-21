@@ -1,9 +1,12 @@
-using System.Text;
-
 /// <summary>
 /// https://adventofcode.com/2022/day/11.
 /// </summary>
-public abstract class DayElevent : IDay<long>
+
+namespace Aoc.Year2022.Day11;
+
+using System.Text;
+
+public abstract class DayEleven : IDay<long>
 {
     /// <summary>
     /// Figure out which monkeys to chase by counting how many items they
@@ -14,7 +17,6 @@ public abstract class DayElevent : IDay<long>
     public static long PartOne(string[] lines)
     {
         var monkeyBusiness = Process(lines, 20, true);
-
         return monkeyBusiness;
     }
 
