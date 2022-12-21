@@ -27,12 +27,3 @@ jobs:
 
       - name: Run dotnet format
         run: dotnet format --verify-no-changes --verbosity minimal
-
-      - name: Run linters
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: ${{ github.base_ref }}
-          LINTER_RULES_PATH: /src/
-          VALIDATE_ALL_CODEBASE: true
-          VALIDATE_CSHARP: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
