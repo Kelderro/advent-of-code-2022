@@ -21,11 +21,8 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Install dotnet-format tool
-        run: dotnet tool install -g dotnet-format
-
       - name: Check out code
         uses: actions/checkout@v3
 
       - name: Run dotnet format
-        run: dotnet format '.\' --folder --check --verbosity diagnostic
+        run: dotnet format --verify-no-changes --verbosity minimal
