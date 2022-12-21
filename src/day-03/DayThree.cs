@@ -1,6 +1,9 @@
 /// <summary>
-/// https://adventofcode.com/2022/day/3
+/// https://adventofcode.com/2022/day/3.
 /// </summary>
+
+namespace Aoc.Year2022.Day03;
+
 public sealed class DayThree : IDay<int>
 {
     public static int PartOne(string[] lines)
@@ -12,13 +15,14 @@ public sealed class DayThree : IDay<int>
             var inBoth = left.Intersect(right).ToList();
             totalScore += Score(inBoth);
         }
+
         return totalScore;
     }
 
     public static int PartTwo(string[] lines)
     {
         var totalScore = 0;
-        for (int i = 0; i < lines.Count(); i = i + 3)
+        for (int i = 0; i < lines.Length; i += 3)
         {
             var inBoth = lines[i].Intersect(lines[i + 1])
                                  .Intersect(lines[i + 2])
@@ -30,10 +34,10 @@ public sealed class DayThree : IDay<int>
         return totalScore;
     }
 
-    private static (string left, string right) SplitInHalf(string input)
+    private static (string Left, string Right) SplitInHalf(string input)
     {
         var splitAt = input.Length / 2;
-        return (input.Substring(0, splitAt), input.Substring(splitAt));
+        return (input[..splitAt], input[splitAt..]);
     }
 
     private static int Score(IEnumerable<char> inBoth)
@@ -47,9 +51,11 @@ public sealed class DayThree : IDay<int>
                 total += chr - 96;
                 continue;
             }
+
             // Handle: A-Z
             total += chr - 38;
         }
+
         return total;
     }
 }

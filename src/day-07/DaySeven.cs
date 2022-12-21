@@ -1,14 +1,16 @@
 /// <summary>
-/// https://adventofcode.com/2022/day/7
+/// https://adventofcode.com/2022/day/7.
 /// </summary>
+
+namespace Aoc.Year2022.Day07;
+
 public sealed class DaySeven : IDay<int>
 {
     /// <summary>
     /// Find all of the directories with a total size of at most 100000.
-    /// What is the sum of the total sizes of those directories?
     /// </summary>
-    /// <param name="lines">Instructions</param>
-    /// <returns>Total size of all the directories together</returns>
+    /// <param name="lines">Instructions.</param>
+    /// <returns>Total size of all the directories together.</returns>
     public static int PartOne(string[] lines)
     {
         var maxFolderSize = 100000;
@@ -20,10 +22,10 @@ public sealed class DaySeven : IDay<int>
 
     /// <summary>
     /// Find the smallest directory that, if deleted, would free up enough
-    /// space on the filesystem to run the update. What is the total size of that directory?
+    /// space on the filesystem to run the update.
     /// </summary>
-    /// <param name="lines">Instructions</param>
-    /// <returns>Total size of the directory that need to be removed</returns>
+    /// <param name="lines">Instructions.</param>
+    /// <returns>Total size of the directory that need to be removed.</returns>
     public static int PartTwo(string[] lines)
     {
         var totalSpaceDiskDrive = 70000000;
@@ -49,8 +51,9 @@ public sealed class DaySeven : IDay<int>
             Name = "/",
         };
 
-        var folders = new List<Folder> {
-            root
+        var folders = new List<Folder>
+        {
+            root,
         };
 
         var folder = root;
@@ -58,6 +61,7 @@ public sealed class DaySeven : IDay<int>
         for (var i = 1; i < lines.Length; i++)
         {
             var instruction = lines[i];
+
             // List folder structure
             if (instruction.Equals("$ ls", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -71,6 +75,7 @@ public sealed class DaySeven : IDay<int>
                 {
                     throw new InvalidOperationException($"The folder '{folder.Name}' has no parent folder.");
                 }
+
                 folder = folder.Parent;
                 continue;
             }
@@ -91,29 +96,32 @@ public sealed class DaySeven : IDay<int>
         {
             i++;
             instruction = lines[i];
+
             // Ignore folders in file listing
             if (instruction.StartsWith("dir"))
             {
                 continue;
             }
+
             folder.FileSize += int.Parse(instruction.Split(' ')[0]);
         }
     }
 
     private static Folder NavigateToFolder(List<Folder> folders, Folder fromFolder, string instruction)
     {
-        var gotoFolder = instruction.Substring(5);
+        var gotoFolder = instruction[5..];
         if (!fromFolder.Children.ContainsKey(gotoFolder))
         {
             var toFolder = new Folder
             {
                 Name = gotoFolder,
-                Parent = fromFolder
+                Parent = fromFolder,
             };
 
             fromFolder.Children.Add(gotoFolder, toFolder);
             folders.Add(toFolder);
         }
+
         fromFolder = fromFolder.Children[gotoFolder];
         return fromFolder;
     }

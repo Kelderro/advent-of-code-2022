@@ -1,29 +1,30 @@
+/// <summary>
+/// https://adventofcode.com/2022/day/11.
+/// </summary>
+
+namespace Aoc.Year2022.Day11;
+
 using System.Text;
 
-/// <summary>
-/// https://adventofcode.com/2022/day/11
-/// </summary>
-public abstract class DayElevent : IDay<long>
+public abstract class DayEleven : IDay<long>
 {
     /// <summary>
     /// Figure out which monkeys to chase by counting how many items they
-    /// inspect over 20 rounds. What is the level of monkey business after
-    /// 20 rounds of stuff-slinging simian shenanigans?
+    /// inspect over 20 rounds.
     /// </summary>
-    /// <param name="lines">Instructions</param>
+    /// <param name="lines">Instructions.</param>
     /// <returns>Level of monkey business after 20 rounds.</returns>
     public static long PartOne(string[] lines)
     {
         var monkeyBusiness = Process(lines, 20, true);
-
         return monkeyBusiness;
     }
 
     /// <summary>
     /// What is the level of monkey business after 10000 rounds.
     /// </summary>
-    /// <param name="lines">Instructions</param>
-    /// <returns>Level of monkey business after 10000 rounds</returns>
+    /// <param name="lines">Instructions.</param>
+    /// <returns>Level of monkey business after 10000 rounds.</returns>
     public static long PartTwo(string[] lines)
     {
         var monkeyBusiness = Process(lines, 10000);
@@ -34,7 +35,7 @@ public abstract class DayElevent : IDay<long>
     /// <summary>
     /// Go over the instructions (lines) and run the process to calculate the monkey business.
     /// </summary>
-    /// <param name="lines">Instructions</param>
+    /// <param name="lines">Instructions.</param>
     /// <param name="maxRounds">Maximum number of rounds.</param>
     /// <param name="inspectionReduceWorryLevel">Consider a reduction of worry
     /// level per item per inspection.</param>
@@ -51,7 +52,7 @@ public abstract class DayElevent : IDay<long>
 
         for (var round = 1; round <= maxRounds; round++)
         {
-            for (var i = 0; i < monkeys.Count(); i++)
+            for (var i = 0; i < monkeys.Count; i++)
             {
                 var monkey = monkeys[i];
 
@@ -89,10 +90,11 @@ public abstract class DayElevent : IDay<long>
     private static IList<Monkey> CreateMonkeys(string[] monkeyDescriptions)
     {
         var monkeys = new List<Monkey>();
+
         // Only 5 lines of the monkey description are relevant
         var monkeyDescriptionLength = 7;
 
-        for (var i = 1; i < monkeyDescriptions.Length; i = i + monkeyDescriptionLength)
+        for (var i = 1; i < monkeyDescriptions.Length; i += monkeyDescriptionLength)
         {
             // - 2: Skipping the monkey identifier line (first line) and white line at the end
             var singleMonkeyDescription = monkeyDescriptions[i..(i + monkeyDescriptionLength - 2)];
@@ -105,7 +107,7 @@ public abstract class DayElevent : IDay<long>
     /// <summary>
     /// Calculate the item worry level per inspection.
     /// </summary>
-    /// <param name="inspectionReduceWorryLevel">Reduce the worry level by 3</param>
+    /// <param name="inspectionReduceWorryLevel">Reduce the worry level by 3.</param>
     /// <param name="lcm">Least common multiplier to reduce the worry level number. Preventing
     /// overflowing the item worry levels.</param>
     /// <param name="itemWorryLevel">Current level of the item worry level.</param>
@@ -129,7 +131,7 @@ public abstract class DayElevent : IDay<long>
     /// for debugging but not required to get to the answer.
     /// </summary>
     /// <param name="monkeys">Monkey to report on.</param>
-    /// <returns>A report containing the number of inspected items per monkey</returns>
+    /// <returns>A report containing the number of inspected items per monkey.</returns>
     private static string ReportInspectionRate(IList<Monkey> monkeys, int round)
     {
         Console.WriteLine($"== After round {round}");
@@ -139,6 +141,7 @@ public abstract class DayElevent : IDay<long>
         {
             result.AppendLine($"Monkey {i} inspected items {monkeys[i].Inspections} times.");
         }
+
         return result.ToString();
     }
 

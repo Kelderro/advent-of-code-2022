@@ -1,9 +1,11 @@
+namespace Aoc.Year2022.Day11;
+
 using FluentAssertions;
 using Xunit;
 
-public class DayEleventTests
+public class DayElevenTests
 {
-    private string[] unitTestInput = """
+    private readonly string[] unitTestInput = """
     Monkey 0:
       Starting items: 79, 98
       Operation: new = old * 19
@@ -36,7 +38,7 @@ public class DayEleventTests
     [Fact]
     public void PartOne_OnExampleTestCase_ReturnMonkeyBusinessAmount()
     {
-        var result = DayElevent.PartOne(this.unitTestInput);
+        var result = DayEleven.PartOne(this.unitTestInput);
 
         result.Should().Be(10605);
     }
@@ -46,7 +48,7 @@ public class DayEleventTests
     {
         var fileInput = ReadInput(11);
 
-        var result = DayElevent.PartOne(fileInput);
+        var result = DayEleven.PartOne(fileInput);
 
         result.Should().Be(62491);
     }
@@ -54,7 +56,7 @@ public class DayEleventTests
     [Fact]
     public void PartTwo_OnExampleTestCase_ReturnMonkeyBusinessAmount()
     {
-        var result = DayElevent.PartTwo(this.unitTestInput);
+        var result = DayEleven.PartTwo(this.unitTestInput);
 
         result.Should().Be(2713310158);
     }
@@ -64,12 +66,12 @@ public class DayEleventTests
     {
         var fileInput = ReadInput(11);
 
-        var result = DayElevent.PartTwo(fileInput);
+        var result = DayEleven.PartTwo(fileInput);
 
         result.Should().Be(17408399184);
     }
 
-    string[] ReadInput(int dayNumber)
+    private static string[] ReadInput(int dayNumber)
     {
         return File.ReadAllLines($"./src/day-{dayNumber}/input.txt");
     }

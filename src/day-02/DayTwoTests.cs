@@ -1,5 +1,7 @@
-using Xunit;
+namespace Aoc.Year2022.Day02;
+
 using FluentAssertions;
+using Xunit;
 
 public class DayTwoTests
 {

@@ -1,9 +1,11 @@
-using Xunit;
+namespace Aoc.Year2022.Day07;
+
 using FluentAssertions;
+using Xunit;
 
 public class DaySevenTests
 {
-    private string[] input = """
+    private readonly string[] input = """
         $ cd /
         $ ls
         dir a
