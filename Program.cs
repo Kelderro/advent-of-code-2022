@@ -1,4 +1,4 @@
-﻿Resolve<DayOne, int>(1);
+Resolve<DayOne, int>(1);
 Resolve<DayTwo, int>(2);
 Resolve<DayThree, int>(3);
 Resolve<DayFour, int>(4);
