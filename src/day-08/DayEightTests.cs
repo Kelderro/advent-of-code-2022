@@ -1,7 +1,7 @@
-using Xunit;
-using FluentAssertions;
-
 namespace Aoc.Year2022.Day08;
+
+using FluentAssertions;
+using Xunit;
 
 public class DayEightTests
 {
@@ -24,7 +24,7 @@ public class DayEightTests
     [Fact]
     public void PartOne_OnRunningSolution_ReturnAmountOfVisibleTrees()
     {
-        var input = ReadInput(8);
+        var input = this.ReadInput(8);
 
         var result = DayEight.PartOne(input);
 
@@ -42,7 +42,7 @@ public class DayEightTests
     [Fact]
     public void PartTwo_OnRunningSolution_ReturnHighestScenicScore()
     {
-        var result = DayEight.PartTwo(ReadInput(8));
+        var result = DayEight.PartTwo(this.ReadInput(8));
 
         result.Should().BeGreaterThan(384); // Should be higher than 384
     }

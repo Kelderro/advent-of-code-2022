@@ -1,4 +1,3 @@
-
 /// <summary>
 /// https://adventofcode.com/2022/day/8
 /// </summary>
@@ -9,10 +8,10 @@ public sealed class DayEight : IDay<int>
 {
     /// <summary>
     /// With 16 trees visible on the edge and another 5 visible in the interior, a total of 21 trees are visible in this arrangement.
-    /// Consider your map; how many trees are visible from outside the grid?
+    /// Consider your map; how many trees are visible from outside the grid?.
     /// </summary>
-    /// <param name="mapLines">Map</param>
-    /// <returns>Amount of trees that are visible from outside the grid</returns>
+    /// <param name="mapLines">Map.</param>
+    /// <returns>Amount of trees that are visible from outside the grid.</returns>
     public static int PartOne(string[] mapLines)
     {
         var mapLineLength = mapLines.Length;
@@ -39,10 +38,33 @@ public sealed class DayEight : IDay<int>
     }
 
     /// <summary>
-    /// Transform the map from string array to a multidimensional array
+    /// Consider each tree on your map. What is the highest scenic score possible for any tree?.
     /// </summary>
-    /// <param name="mapLines">Map to transform</param>
-    /// <returns>Transformed map</returns>
+    /// <param name="map">Map.</param>
+    /// <returns>Highest scenic score possible.</returns>
+    public static int PartTwo(string[] map)
+    {
+        var matrixSize = map.Length;
+        var matrix = CreateMatrix(map);
+        var maxScenicScore = 0;
+
+        for (var r = 0; r < matrixSize; r++)
+        {
+            for (var c = 0; c < matrixSize; c++)
+            {
+                var scenicScore = CalculateScenicScore(matrix, r, c);
+                maxScenicScore = int.Max(maxScenicScore, scenicScore);
+            }
+        }
+
+        return maxScenicScore;
+    }
+
+    /// <summary>
+    /// Transform the map from string array to a multidimensional array.
+    /// </summary>
+    /// <param name="mapLines">Map to transform.</param>
+    /// <returns>Transformed map.</returns>
     private static int[,] CreateMatrix(string[] mapLines)
     {
         var mapLineLength = mapLines.Length;
@@ -85,10 +107,10 @@ public sealed class DayEight : IDay<int>
     {
         var cellValue = map[row, column];
 
-        /// In the current state the method is not optimized. To optimize the method, overwrite
-        /// the value of the current cell when the cell value above it is higher. With this
-        /// you don't need to go all the way up to verify if there isn't a higher tree blocking
-        /// the current tree.
+        // In the current state the method is not optimized. To optimize the method, overwrite
+        // the value of the current cell when the cell value above it is higher. With this
+        // you don't need to go all the way up to verify if there isn't a higher tree blocking
+        // the current tree.
         for (var i = row - 1; i >= 0; i--)
         {
             if (map[i, column] >= cellValue)
@@ -157,10 +179,10 @@ public sealed class DayEight : IDay<int>
     {
         var cellValue = map[row, column];
 
-        /// In the current state the method is not optimized. To optimize the method, overwrite
-        /// the value of the current cell when the cell value on the left is higher. With this
-        /// you don't need to go all the way up to verify if there isn't a higher tree blocking
-        /// the current tree.
+        // In the current state the method is not optimized. To optimize the method, overwrite
+        // the value of the current cell when the cell value on the left is higher. With this
+        // you don't need to go all the way up to verify if there isn't a higher tree blocking
+        // the current tree.
         for (var i = column - 1; i >= 0; i--)
         {
             if (map[row, i] >= cellValue)
@@ -170,29 +192,6 @@ public sealed class DayEight : IDay<int>
         }
 
         return true;
-    }
-
-    /// <summary>
-    /// Consider each tree on your map. What is the highest scenic score possible for any tree?
-    /// </summary>
-    /// <param name="map">Map</param>
-    /// <returns>Highest scenic score possible</returns>
-    public static int PartTwo(string[] map)
-    {
-        var matrixSize = map.Length;
-        var matrix = CreateMatrix(map);
-        var maxScenicScore = 0;
-
-        for (var r = 0; r < matrixSize; r++)
-        {
-            for (var c = 0; c < matrixSize; c++)
-            {
-                var scenicScore = CalculateScenicScore(matrix, r, c);
-                maxScenicScore = int.Max(maxScenicScore, scenicScore);
-            }
-        }
-
-        return maxScenicScore;
     }
 
     private static int CalculateScenicScore(int[,] map, int row, int column)
