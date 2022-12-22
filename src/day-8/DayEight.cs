@@ -2,6 +2,9 @@
 /// <summary>
 /// https://adventofcode.com/2022/day/8
 /// </summary>
+
+namespace Aoc.Year2022.Day08;
+
 public sealed class DayEight : IDay<int>
 {
     /// <summary>

@@ -1,3 +1,5 @@
+namespace Aoc.Year2022.Day02;
+
 public sealed class DayTwo : IDay<int>
 {
     // First column
@@ -13,8 +15,8 @@ public sealed class DayTwo : IDay<int>
     // Lose: 0
     // Draw: 3
     // Win: 6
-
-    private static Dictionary<char, int> CalcInputScore = new() {
+    private static readonly Dictionary<char, int> CalcInputScore = new()
+    {
         { 'X', 1 },
         { 'Y', 2 },
         { 'Z', 3 },
@@ -27,6 +29,7 @@ public sealed class DayTwo : IDay<int>
         {
             total += Score(line[0], line[2]);
         }
+
         return total;
     }
 
@@ -43,7 +46,6 @@ public sealed class DayTwo : IDay<int>
         // X: Lose
         // Y: Draw
         // Z: Win
-
         var total = 0;
         foreach (var line in lines)
         {
@@ -52,6 +54,7 @@ public sealed class DayTwo : IDay<int>
 
             total += Score(otherPlayerInput, playSymbol);
         }
+
         return total;
     }
 
@@ -59,13 +62,15 @@ public sealed class DayTwo : IDay<int>
     {
         var otherPlayerCharInt = (char)(int)line[0] + ('X' - 'A');
 
-        if (line[2] == 'X') // Need to lose
+        // Check if player need to make a losing move
+        if (line[2] == 'X')
         {
             var losingChar = otherPlayerCharInt - 1;
             return (losingChar == 87) ? 'Z' : (char)losingChar;
         }
 
-        if (line[2] == 'Y') // Play a draw
+        // Check if player need to make a move that end up in a draw
+        if (line[2] == 'Y')
         {
             return (char)otherPlayerCharInt;
         }
@@ -90,7 +95,8 @@ public sealed class DayTwo : IDay<int>
             return 3;
         }
 
-        var losePlaying = new Dictionary<char, char> {
+        var losePlaying = new Dictionary<char, char>
+        {
             { 'A', 'Z' },
             { 'B', 'X' },
             { 'C', 'Y' },
@@ -102,6 +108,7 @@ public sealed class DayTwo : IDay<int>
         {
             return 0;
         }
+
         return 6;
     }
 }

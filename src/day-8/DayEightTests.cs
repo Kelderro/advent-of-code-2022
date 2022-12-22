@@ -1,6 +1,8 @@
 using Xunit;
 using FluentAssertions;
 
+namespace Aoc.Year2022.Day08;
+
 public class DayEightTests
 {
     private readonly string[] exampleTestInput = """

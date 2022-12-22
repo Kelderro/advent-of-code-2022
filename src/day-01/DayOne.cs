@@ -1,3 +1,5 @@
+namespace Aoc.Year2022.Day01;
+
 public sealed class DayOne : IDay<int>
 {
     public static int PartOne(string[] lines)
@@ -31,8 +33,10 @@ public sealed class DayOne : IDay<int>
                 count++;
                 continue;
             }
+
             amount += int.Parse(line);
         }
+
         elves.Add(amount);
         return elves;
     }

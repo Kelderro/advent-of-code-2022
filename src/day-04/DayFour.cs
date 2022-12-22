@@ -1,6 +1,9 @@
 /// <summary>
-/// https://adventofcode.com/2022/day/4
+/// https://adventofcode.com/2022/day/4.
 /// </summary>
+
+namespace Aoc.Year2022.Day04;
+
 public sealed class DayFour : IDay<int>
 {
     public static int PartOne(string[] lines)
@@ -17,7 +20,6 @@ public sealed class DayFour : IDay<int>
              || !secondElfAssignment.Except(firstElfAssignment).Any())
             {
                 total++;
-                continue;
             }
         }
 
