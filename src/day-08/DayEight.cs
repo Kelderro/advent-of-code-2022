@@ -84,9 +84,9 @@ public sealed class DayEight : IDay<int>
     /// <summary>
     /// Determine if the tree is visible looking from the top, right, bottom or left.
     /// </summary>
-    /// <param name="map"></param>
-    /// <param name="row"></param>
-    /// <param name="column"></param>
+    /// <param name="map">Map.</param>
+    /// <param name="row">Row number.</param>
+    /// <param name="column">Column number.</param>
     /// <returns>true if the tree is visible; otherwise, false.</returns>
     private static bool IsTreeVisible(int[,] map, int row, int column)
     {
@@ -99,9 +99,9 @@ public sealed class DayEight : IDay<int>
     /// <summary>
     /// Check if the tree is visible from the top.
     /// </summary>
-    /// <param name="map"></param>
-    /// <param name="row"></param>
-    /// <param name="column"></param>
+    /// <param name="map">Map.</param>
+    /// <param name="row">Row number.</param>
+    /// <param name="column">Column number.</param>
     /// <returns>true if the tree is visible when looking from the top; otherwise, false.</returns>
     private static bool IsTreeVisibleFromTop(int[,] map, int row, int column)
     {
@@ -125,9 +125,9 @@ public sealed class DayEight : IDay<int>
     /// <summary>
     /// Check if the tree is visible from the right.
     /// </summary>
-    /// <param name="map"></param>
-    /// <param name="row"></param>
-    /// <param name="column"></param>
+    /// <param name="map">Map.</param>
+    /// <param name="row">Row number.</param>
+    /// <param name="column">Column number.</param>
     /// <returns>true if the tree is visible when looking from the right; otherwise, false.</returns>
     private static bool IsTreeVisibleFromRight(int[,] map, int row, int column)
     {
@@ -148,9 +148,9 @@ public sealed class DayEight : IDay<int>
     /// <summary>
     /// Check if the tree is visible from the bottom.
     /// </summary>
-    /// <param name="map"></param>
-    /// <param name="row"></param>
-    /// <param name="column"></param>
+    /// <param name="map">Map.</param>
+    /// <param name="row">Row number.</param>
+    /// <param name="column">Column number.</param>
     /// <returns>true if the tree is visible when looking from the bottom; otherwise, false.</returns>
     private static bool IsTreeVisibleFromBottom(int[,] map, int row, int column)
     {
@@ -171,9 +171,9 @@ public sealed class DayEight : IDay<int>
     /// <summary>
     /// Check if the tree is visible from the left.
     /// </summary>
-    /// <param name="map"></param>
-    /// <param name="row"></param>
-    /// <param name="column"></param>
+    /// <param name="map">Map.</param>
+    /// <param name="row">Row number.</param>
+    /// <param name="column">Column number.</param>
     /// <returns>true if the tree is visible when looking from the left; otherwise, false.</returns>
     private static bool IsTreeVisibleFromLeft(int[,] map, int row, int column)
     {
