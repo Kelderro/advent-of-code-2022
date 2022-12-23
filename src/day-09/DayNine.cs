@@ -38,7 +38,7 @@ public abstract class DayNine : IDay<int>
                     MoveLeft(moves, steps, ref head, ref tail);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(direction), $"The provided direction value is out of range");
+                    throw new NotSupportedException($"The provided direction character '{direction}' is not supported.");
             }
         }
 
