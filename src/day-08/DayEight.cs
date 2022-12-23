@@ -10,12 +10,12 @@ public sealed class DayEight : IDay<int>
     /// With 16 trees visible on the edge and another 5 visible in the interior, a total of 21 trees are visible in this arrangement.
     /// Consider your map; how many trees are visible from outside the grid?.
     /// </summary>
-    /// <param name="mapLines">Map.</param>
+    /// <param name="lines">Map.</param>
     /// <returns>Amount of trees that are visible from outside the grid.</returns>
-    public static int PartOne(string[] mapLines)
+    public static int PartOne(string[] lines)
     {
-        var mapLineLength = mapLines.Length;
-        var map = CreateMatrix(mapLines);
+        var mapLineLength = lines.Length;
+        var map = CreateMatrix(lines);
 
         // Edge trees that are always visible
         var visibleTrees = (mapLineLength * 4) - 4;
@@ -40,12 +40,12 @@ public sealed class DayEight : IDay<int>
     /// <summary>
     /// Consider each tree on your map. What is the highest scenic score possible for any tree?.
     /// </summary>
-    /// <param name="map">Map.</param>
+    /// <param name="lines">Map.</param>
     /// <returns>Highest scenic score possible.</returns>
-    public static int PartTwo(string[] map)
+    public static int PartTwo(string[] lines)
     {
-        var matrixSize = map.Length;
-        var matrix = CreateMatrix(map);
+        var matrixSize = lines.Length;
+        var matrix = CreateMatrix(lines);
         var maxScenicScore = 0;
 
         for (var r = 0; r < matrixSize; r++)
@@ -197,15 +197,10 @@ public sealed class DayEight : IDay<int>
     private static int CalculateScenicScore(int[,] map, int row, int column)
     {
         var score = ScenicScoreUp(map, row, column);
-        score = Multiply(score, ScenicScoreLookingRight(map, row, column));
-        score = Multiply(score, ScenicScoreLookingDown(map, row, column));
-        score = Multiply(score, ScenicScoreLookingLeft(map, row, column));
+        score *= ScenicScoreLookingRight(map, row, column);
+        score *= ScenicScoreLookingDown(map, row, column);
+        score *= ScenicScoreLookingLeft(map, row, column);
         return score;
-    }
-
-    private static int Multiply(int score, int addScore)
-    {
-        return score *= addScore;
     }
 
     private static int ScenicScoreUp(int[,] map, int row, int column)
