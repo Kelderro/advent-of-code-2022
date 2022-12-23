@@ -7,6 +7,7 @@ Resolve<Aoc.Year2022.Day04.DayFour, int>(4);
 Resolve<Aoc.Year2022.Day05.DayFive, string>(5);
 Resolve<Aoc.Year2022.Day06.DaySix, int>(6);
 Resolve<Aoc.Year2022.Day07.DaySeven, int>(7);
+Resolve<Aoc.Year2022.Day08.DayEight, int>(8);
 Resolve<Aoc.Year2022.Day10.DayTen, string>(10);
 Resolve<Aoc.Year2022.Day11.DayEleven, long>(11);
 
