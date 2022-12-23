@@ -44,11 +44,11 @@ public class DayEightTests
     {
         var result = DayEight.PartTwo(this.ReadInput(8));
 
-        result.Should().BeGreaterThan(384); // Should be higher than 384
+        result.Should().Be(335580);
     }
 
     private string[] ReadInput(int dayNumber)
     {
-        return File.ReadAllLines($"./src/day-{dayNumber}/input.txt");
+        return File.ReadAllLines($"./src/day-{dayNumber:00}/input.txt");
     }
 }

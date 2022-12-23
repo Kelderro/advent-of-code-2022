@@ -205,43 +205,23 @@ public sealed class DayEight : IDay<int>
 
     private static int Multiply(int score, int addScore)
     {
-        if (addScore == 0)
-        {
-            return score;
-        }
-
-        if (score == 0)
-        {
-            score = 1;
-        }
-
         return score *= addScore;
     }
 
     private static int ScenicScoreUp(int[,] map, int row, int column)
     {
-        var highestTree = 0;
         var treeHeight = map[row, column];
         var score = 0;
 
         for (var r = row - 1; r >= 0; r--)
         {
-            // The tree is blocked by another tree that is taller
-            if (map[r, column] < highestTree)
-            {
-                break;
-            }
-
             score++;
 
-            // Stop if you reach an edge or at the first tree that is the same
-            // height or taller than the tree under consideration
+            // The tree is blocked by another tree that is taller
             if (map[r, column] >= treeHeight)
             {
                 break;
             }
-
-            highestTree = int.Max(map[r, column], highestTree);
         }
 
         return score;
@@ -251,27 +231,17 @@ public sealed class DayEight : IDay<int>
     {
         var matrixLength = map.GetLength(0);
         var treeHeight = map[row, column];
-        var highestTree = 0;
         var score = 0;
 
         for (var c = column + 1; c < matrixLength; c++)
         {
-            // The tree is blocked by another tree that is taller
-            if (map[row, c] < highestTree)
-            {
-                break;
-            }
-
             score++;
 
-            // Stop if you reach an edge or at the first tree that is the same
-            // height or taller than the tree under consideration
+            // The tree is blocked by another tree that is taller
             if (map[row, c] >= treeHeight)
             {
                 break;
             }
-
-            highestTree = int.Max(map[row, c], highestTree);
         }
 
         return score;
@@ -281,27 +251,17 @@ public sealed class DayEight : IDay<int>
     {
         var matrixLength = map.GetLength(0);
         var treeHeight = map[row, column];
-        var highestTree = 0;
         var score = 0;
 
         for (var r = row + 1; r < matrixLength; r++)
         {
-            // The tree is blocked by another tree that is taller
-            if (map[r, column] < highestTree)
-            {
-                break;
-            }
-
             score++;
 
-            // Stop if you reach an edge or at the first tree that is the same
-            // height or taller than the tree under consideration
+            // The tree is blocked by another tree that is taller
             if (map[r, column] >= treeHeight)
             {
                 break;
             }
-
-            highestTree = int.Max(map[r, column], highestTree);
         }
 
         return score;
@@ -310,27 +270,17 @@ public sealed class DayEight : IDay<int>
     private static int ScenicScoreLookingLeft(int[,] map, int row, int column)
     {
         var treeHeight = map[row, column];
-        var highestTree = 0;
         var score = 0;
 
         for (var c = column - 1; c >= 0; c--)
         {
-            // The tree is blocked by another tree that is taller
-            if (map[row, c] < highestTree)
-            {
-                break;
-            }
-
             score++;
 
-            // Stop if you reach an edge or at the first tree that is the same
-            // height or taller than the tree under consideration
+            // The tree is blocked by another tree that is taller
             if (map[row, c] >= treeHeight)
             {
                 break;
             }
-
-            highestTree = int.Max(map[row, c], highestTree);
         }
 
         return score;
