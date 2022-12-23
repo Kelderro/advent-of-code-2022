@@ -3,17 +3,17 @@
 /// https://adventofcode.com/2022/day/9
 /// </summary>
 
-using System.Drawing;
-
 namespace Aoc.Year2022.Day09;
+
+using System.Drawing;
 
 public abstract class DayNine : IDay<int>
 {
     public static int PartOne(string[] lines)
     {
         var moves = new HashSet<Point>();
-        var head = new Point();
-        var tail = new Point();
+        var head = default(Point);
+        var tail = default(Point);
 
         moves.Add(tail);
 
@@ -38,13 +38,18 @@ public abstract class DayNine : IDay<int>
                     MoveLeft(moves, steps, ref head, ref tail);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(direction), $"The direction value '{direction}' is out of range");
+                    throw new ArgumentOutOfRangeException(nameof(direction), $"The provided direction value is out of range");
             }
         }
 
         PrintMoves(moves);
 
         return moves.Count;
+    }
+
+    public static int PartTwo(string[] lines)
+    {
+        return 0;
     }
 
     private static void PrintMoves(HashSet<Point> moves)
@@ -74,9 +79,8 @@ public abstract class DayNine : IDay<int>
                 }
             }
 
-            Console.WriteLine(String.Empty);
+            Console.WriteLine(string.Empty);
         }
-
     }
 
     private static void MoveUp(HashSet<Point> moves, int steps, ref Point head, ref Point tail)
@@ -166,10 +170,5 @@ public abstract class DayNine : IDay<int>
         var yAbs = Math.Abs(head.Y - tail.Y);
 
         return xAbs == 1 && yAbs == 1;
-    }
-
-    public static int PartTwo(string[] lines)
-    {
-        return 0;
     }
 }
