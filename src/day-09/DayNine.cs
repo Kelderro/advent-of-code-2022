@@ -42,7 +42,9 @@ public abstract class DayNine : IDay<int>
             }
         }
 
+#if DEBUG
         PrintMoves(moves);
+#endif
 
         return moves.Count;
     }
