@@ -1,5 +1,5 @@
 
-using System.Collections.ObjectModel;
+using System.Text;
 /// <summary>
 /// Day 12: Hill Climbing Algorithm
 /// https://adventofcode.com/2022/day/12.
@@ -8,170 +8,239 @@ namespace Aoc.Year2022.Day12;
 
 public sealed class DayTwelve : IDay<int>
 {
+    public class CellInfo
+    {
+        public CellInfo(int index, int stepNumber)
+        {
+            this.Index = index;
+            this.StepNumber = stepNumber;
+        }
+
+        public int Index { get; init; }
+
+        public int StepNumber { get; set; }
+    }
+
     public static int PartOne(string[] lines)
     {
+        var leastSteps = 0;
+
         // input = heightmap
         // S = Current position (elevation always a)
         // E = Location with best signal (elevation always z)
-        var grid = CreateGrid(lines);
+        var map = CreateHeightMap(lines);
 
-        var visisted = new List<int>();
-        var path = new List<int>();
-        var solutions = new List<IList<int>>();
+        var itemCovered = new HashSet<int>();
+        var queue = new Queue<CellInfo>();
+        queue.Enqueue(new CellInfo(map.StartPosition, 0));
+        Console.Clear();
+        Console.CursorVisible = true;
 
+        PrintMap(map);
 
+        while (queue.Count > 0)
+        {
+            var cellInfo = queue.Dequeue();
+            var cellIndex = cellInfo.Index;
 
-        // Backtrack - Optimization problem
-        //BackTrack(grid, lines[0].Length, 3220, visisted, path, solutions);
+            if (itemCovered.Contains(cellIndex))
+                continue;
 
-        return path.Count;
+            itemCovered.Add(cellIndex);
+
+            leastSteps = cellInfo.StepNumber;
+
+            // Cell above
+            var cellValue = map.Grid[cellIndex];
+
+            UpdateCell(cellIndex, map);
+            //Console.WriteLine($"{cellInfo.StepNumber:00} - {cellValue} - {cellIndex:00}");
+
+            // Check if there is a cell above the element
+            var cellUpIndex = cellIndex - map.ColumnCount;
+            if (cellUpIndex > 0)
+            {
+                var cellUpValue = map.Grid[cellUpIndex];
+                var offSet = cellUpValue - cellValue + 0;
+                if (offSet == 0 || offSet == 1)
+                {
+                    queue.Enqueue(new CellInfo(cellUpIndex, cellInfo.StepNumber + 1));
+                }
+            }
+
+            // Cell on the right
+            var cellRightIndex = cellIndex + 1;
+            // Check if the cell on the right is not on the next line
+            if (cellRightIndex % map.ColumnCount != 0)
+            {
+                var cellRightValue = map.Grid[cellRightIndex];
+                var offSet = cellRightValue - cellValue + 0;
+                if (offSet == 0 || offSet == 1)
+                {
+                    queue.Enqueue(new CellInfo(cellRightIndex, cellInfo.StepNumber + 1));
+                }
+            }
+
+            // Cell under
+            var cellDownIndex = cellIndex + map.ColumnCount;
+            // Check if the cell under it is in range
+            if (cellDownIndex < map.Grid.Length)
+            {
+                var cellDownValue = map.Grid[cellDownIndex];
+                var offSet = cellDownValue - cellValue + 0;
+                if (offSet == 0 || offSet == 1)
+                {
+                    queue.Enqueue(new CellInfo(cellDownIndex, cellInfo.StepNumber + 1));
+                }
+            }
+
+            // Cell on the left
+            var cellLeftIndex = cellIndex - 1;
+            // Check if the cell on the left is not on the previous line
+            if (cellLeftIndex >= 0
+             && cellLeftIndex != (map.ColumnCount - 1))
+            {
+                var cellLeftValue = map.Grid[cellLeftIndex];
+                var offSet = cellLeftValue - cellValue + 0;
+                if (offSet == 0 || offSet == 1)
+                {
+                    queue.Enqueue(new CellInfo(cellLeftIndex, cellInfo.StepNumber + 1));
+                }
+            }
+        }
+
+        PrintItemsCovered(itemCovered, map);
+        Console.CursorVisible = true;
+
+        return leastSteps;
+    }
+
+    private static void PrintMap(HeightMap map)
+    {
+        Console.Clear();
+        Console.SetCursorPosition(0, 0);
+
+        var sb = new StringBuilder();
+        for (var i = 0; i < map.RowCount * map.ColumnCount; i++)
+        {
+            if (i % map.ColumnCount == 0)
+            {
+                sb.AppendLine();
+            }
+
+            sb.Append(map.Grid[i]);
+        }
+
+        Console.ForegroundColor = ConsoleColor.DarkGray;
+        Console.WriteLine(sb.ToString());
+    }
+
+    private static void UpdateCell(int cellIndex, HeightMap map)
+    {
+        Console.CursorVisible = false;
+        var column = cellIndex % map.ColumnCount;
+        var row = (int)Math.Floor((float)cellIndex / map.ColumnCount);
+        Console.SetCursorPosition(column, row);
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.Write(map.Grid[cellIndex]);
+        Thread.Sleep(5);
+        Console.CursorVisible = true;
+    }
+
+    private static void PrintItemsCovered(HashSet<int> itemCovered, HeightMap map)
+    {
+        Console.SetCursorPosition(0, 0);
+        for (var i = 0; i < map.RowCount * map.ColumnCount; i++)
+        {
+            if (i % map.ColumnCount == 0)
+            {
+                Console.WriteLine();
+            }
+
+            Console.ForegroundColor = itemCovered.Contains(i) ? ConsoleColor.DarkGreen : ConsoleColor.DarkGray;
+            Console.Write(map.Grid[i]);
+        }
     }
 
     public static int PartTwo(string[] lines)
     {
         return 0;
     }
-    /*
-        private static bool BackTrack(char[,] grid, int columnCount, int position, IList<int> visisted, IList<int> path, List<IList<int>> solutions)
-        {
-            // ReportPath(grid, path);
-            Console.WriteLine(path.Count);
 
-            var positionChar = grid[position];
-
-            // Console.WriteLine($"Visiting cell with value {positionChar} position: {position}");
-
-            // Starting position (S) has elvation a
-            if (positionChar == 'S')
-            {
-                positionChar = 'a';
-            }
-
-            // Best signal location (E) has elvation z
-            if (positionChar == 'E')
-            {
-                positionChar = 'z';
-            }
-
-            // Step to big. Return
-            if (path.Any() &&
-                (Math.Abs(positionChar - grid[path.Last()]) > 1))
-            {
-                // Console.WriteLine("Out of range character");
-                return false;
-            }
-
-            if (positionChar == 'z')
-            {
-                path.Add(position);
-                solutions.Add(path);
-                return true;
-            }
-
-            if (visisted.Contains(position))
-            {
-                // Console.WriteLine("Already visisted this cell");
-                return false;
-            }
-
-            visisted.Add(position);
-
-            // Check if we can navigate a cell upwards
-            var upCellPosition = position - columnCount;
-            if (upCellPosition >= 0)
-            {
-                path.Add(position);
-                // Console.WriteLine("Moving up");
-                if (BackTrack(grid, columnCount, upCellPosition, visisted, path, solutions))
-                {
-                    return true;
-                }
-
-                path.Remove(position);
-            }
-
-            // Check if we can navigate a cell to the right
-            var rightCellPosition = position + 1;
-            if (rightCellPosition % columnCount != 0)
-            {
-                path.Add(position);
-                // Console.WriteLine("Moving right");
-                if (BackTrack(grid, columnCount, rightCellPosition, visisted, path, solutions))
-                {
-                    return true;
-                }
-
-                path.Remove(position);
-            }
-
-            // Check if we can navigate a cell downwards
-            var downCellPosition = position + columnCount;
-            if (downCellPosition < grid.Count)
-            {
-                path.Add(position);
-                // Console.WriteLine("Moving down");
-                if (BackTrack(grid, columnCount, downCellPosition, visisted, path, solutions))
-                {
-                    return true;
-                }
-
-                path.Remove(position);
-            }
-
-            // Check if we can navigate a cell to the left
-            var leftCellPosition = position - 1;
-            if (leftCellPosition > 0)
-            {
-                path.Add(position);
-                // Console.WriteLine("Moving left");
-                if (BackTrack(grid, columnCount, leftCellPosition, visisted, path, solutions))
-                {
-                    return true;
-                }
-
-                path.Remove(position);
-            }
-
-            // Console.WriteLine(string.Empty);
-            return false;
-        }
-
-        private static void ReportPath(ReadOnlyCollection<char> grid, IList<int> solution)
-        {
-            for (var i = 0; i < solution.Count; i++)
-            {
-                Console.WriteLine($"{i} - {grid[solution[i]]} - {solution[i]}");
-            }
-        }
-    */
-    private static char[,] CreateGrid(string[] lines)
+    private static HeightMap CreateHeightMap(string[] lines)
     {
+        // Int is an struct and must contain a value. The default value would be 0 but this is a valid
+        // location in the grid. Assigning int.MinValue to be able to check if a certain position was
+        // not found in the grid.
+        var startPosition = int.MinValue;
+        var bestSignalPosition = int.MinValue;
+
         var totalRows = lines.Length;
         var totalColumns = lines[0].Length;
 
-        var grid = new char[totalRows, totalColumns];
+        var grid = new char[totalRows * totalColumns];
 
         for (var row = 0; row < lines.Length; row++)
         {
-            var line = lines[row];
-
             for (var column = 0; column < lines[0].Length; column++)
             {
-                var chr = line[column];
+                var chr = lines[row][column];
+                var gridPosition = row * lines[0].Length + column;
+
                 if (chr == 'S')
                 {
+                    startPosition = gridPosition;
                     chr = 'a';
                 }
 
                 if (chr == 'E')
                 {
-                    chr = 'z';
+                    bestSignalPosition = gridPosition;
+                    chr = '{';
                 }
 
-                grid[row, column] = chr;
+                if (chr == '!')
+                {
+                    Console.WriteLine();
+                }
+
+                grid[gridPosition] = chr;
             }
         }
 
-        return grid;
+        var invalidGrid = "The provided grid is not valid as there is no {0} location." +
+            " The {0} location is indicated with the letter '{1}'.";
+
+        if (startPosition == int.MinValue)
+        {
+            throw new NotSupportedException(string.Format(invalidGrid, "starting", "S"));
+        }
+
+        if (bestSignalPosition == int.MinValue)
+        {
+            throw new NotSupportedException(string.Format(invalidGrid, "best signal", "E"));
+        }
+
+        return new HeightMap
+        {
+            RowCount = lines.Length,
+            ColumnCount = lines[0].Length,
+            StartPosition = startPosition,
+            BestSignalPosition = bestSignalPosition,
+            Grid = grid,
+        };
+    }
+
+    public class HeightMap
+    {
+        required public int RowCount { get; init; }
+
+        required public int ColumnCount { get; init; }
+
+        required public int StartPosition { get; init; }
+
+        required public int BestSignalPosition { get; init; }
+
+        required public char[] Grid { get; init; }
     }
 }

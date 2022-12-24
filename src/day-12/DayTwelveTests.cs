@@ -20,4 +20,19 @@ public class DayTwelveTests
 
         result.Should().Be(31);
     }
+
+    [Fact]
+    public void PartOne_OnUsingInputFile_ReturnFewestSteps()
+    {
+        var fileInput = ReadInput(12);
+
+        var result = DayTwelve.PartOne(fileInput);
+
+        result.Should().BeGreaterThan(319);
+    }
+
+    private static string[] ReadInput(int dayNumber)
+    {
+        return File.ReadAllLines($"./src/day-{dayNumber:00}/input.txt");
+    }
 }
