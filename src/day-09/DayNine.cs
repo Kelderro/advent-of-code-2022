@@ -139,6 +139,7 @@ public abstract class DayNine : IDay<int>
             {
                 knot.Y++;
             }
+
             return true;
         }
 
@@ -154,6 +155,7 @@ public abstract class DayNine : IDay<int>
             {
                 knot.X++;
             }
+
             return true;
         }
 
@@ -169,8 +171,10 @@ public abstract class DayNine : IDay<int>
             {
                 knot.Y++;
             }
+
             return true;
         }
+
         return false;
     }
 
@@ -222,6 +226,7 @@ public abstract class DayNine : IDay<int>
 
             sb.AppendLine();
         }
+
         Console.WriteLine(sb.ToString());
     }
 
