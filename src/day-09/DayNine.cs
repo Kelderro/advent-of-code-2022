@@ -14,48 +14,20 @@ public abstract class DayNine : IDay<int>
 
     public static int PartOne(string[] lines)
     {
-        var moves = new HashSet<Point>();
-        var rope = new Point[2];
-
-        // Add the tail
-        moves.Add(rope.Last());
-
-        foreach (var line in lines)
-        {
-            var lineSplit = line.Split(" ");
-            var direction = lineSplit[0][0];
-            var steps = int.Parse(lineSplit[1]);
-
-            switch (direction)
-            {
-                case 'U':
-                    Move(moves, steps, rope, (ref Point h) => h.Y--);
-                    break;
-                case 'R':
-                    Move(moves, steps, rope, (ref Point h) => h.X++);
-                    break;
-                case 'D':
-                    Move(moves, steps, rope, (ref Point h) => h.Y++);
-                    break;
-                case 'L':
-                    Move(moves, steps, rope, (ref Point h) => h.X--);
-                    break;
-                default:
-                    throw new NotSupportedException($"The provided direction character '{direction}' is not supported.");
-            }
-        }
-
-#if DEBUG
-        PrintMoves(moves);
-#endif
-
-        return moves.Count;
+        var ropeLength = 2;
+        return Solve(lines, ropeLength);
     }
 
     public static int PartTwo(string[] lines)
     {
+        var ropeLength = 10;
+        return Solve(lines, ropeLength);
+    }
+
+    private static int Solve(string[] lines, int ropeLength)
+    {
         var moves = new HashSet<Point>();
-        var rope = new Point[10];
+        var rope = new Point[ropeLength];
 
         // Add the tail
         moves.Add(rope.Last());
@@ -86,6 +58,9 @@ public abstract class DayNine : IDay<int>
         }
 
 #if DEBUG
+        Console.WriteLine();
+        Console.WriteLine("Rope ended up like:");
+        PrintRope(rope);
         Console.WriteLine();
         Console.WriteLine("Rope tail movements:");
         PrintMoves(moves);
