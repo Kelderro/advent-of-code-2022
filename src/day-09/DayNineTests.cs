@@ -79,7 +79,7 @@ public class DayNineTests
 
         var result = DayNine.PartTwo(input);
 
-        result.Should().BeGreaterThan(2734);
+        result.Should().Be(2734);
     }
 
     private string[] ReadInput(int dayNumber)
