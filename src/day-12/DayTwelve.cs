@@ -8,24 +8,10 @@ namespace Aoc.Year2022.Day12;
 
 public sealed class DayTwelve : IDay<int>
 {
-    public class CellInfo
-    {
-        public CellInfo(int index, int stepNumber)
-        {
-            this.Index = index;
-            this.StepNumber = stepNumber;
-        }
-
-        public int Index { get; init; }
-
-        public int StepNumber { get; set; }
-    }
-
     public static int PartOne(string[] lines)
     {
         var leastSteps = 0;
 
-        // input = heightmap
         // S = Current position (elevation always a)
         // E = Location with best signal (elevation always z)
         var map = CreateHeightMap(lines);
@@ -54,7 +40,6 @@ public sealed class DayTwelve : IDay<int>
             var cellValue = map.Grid[cellIndex];
 
             UpdateCell(cellIndex, map);
-            //Console.WriteLine($"{cellInfo.StepNumber:00} - {cellValue} - {cellIndex:00}");
 
             // Check if there is a cell above the element
             var cellUpIndex = cellIndex - map.ColumnCount;
@@ -96,9 +81,11 @@ public sealed class DayTwelve : IDay<int>
 
             // Cell on the left
             var cellLeftIndex = cellIndex - 1;
-            // Check if the cell on the left is not on the previous line
+            var cellRowNumber = Math.Floor((decimal)cellIndex / map.ColumnCount);
+            var cellLeftRowNumber = Math.Floor((decimal)cellLeftIndex / map.ColumnCount);
+            // Check if the cell on the left is on the same row
             if (cellLeftIndex >= 0
-             && cellLeftIndex != (map.ColumnCount - 1))
+             && cellRowNumber == cellLeftRowNumber)
             {
                 var cellLeftValue = map.Grid[cellLeftIndex];
                 var offSet = cellLeftValue - cellValue + 0;
@@ -112,6 +99,9 @@ public sealed class DayTwelve : IDay<int>
         PrintItemsCovered(itemCovered, map);
         Console.CursorVisible = true;
 
+        Console.WriteLine();
+        Console.WriteLine();
+
         return leastSteps;
     }
 
@@ -123,7 +113,7 @@ public sealed class DayTwelve : IDay<int>
         var sb = new StringBuilder();
         for (var i = 0; i < map.RowCount * map.ColumnCount; i++)
         {
-            if (i % map.ColumnCount == 0)
+            if (i % map.ColumnCount == 0 && i != 0)
             {
                 sb.AppendLine();
             }
@@ -157,7 +147,9 @@ public sealed class DayTwelve : IDay<int>
                 Console.WriteLine();
             }
 
-            Console.ForegroundColor = itemCovered.Contains(i) ? ConsoleColor.DarkGreen : ConsoleColor.DarkGray;
+            Console.ForegroundColor = itemCovered.Contains(i)
+                ? ConsoleColor.DarkGreen
+                : ConsoleColor.DarkGray;
             Console.Write(map.Grid[i]);
         }
     }
@@ -229,6 +221,19 @@ public sealed class DayTwelve : IDay<int>
             BestSignalPosition = bestSignalPosition,
             Grid = grid,
         };
+    }
+
+    public class CellInfo
+    {
+        public CellInfo(int index, int stepNumber)
+        {
+            this.Index = index;
+            this.StepNumber = stepNumber;
+        }
+
+        public int Index { get; init; }
+
+        public int StepNumber { get; set; }
     }
 
     public class HeightMap
