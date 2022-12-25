@@ -3,7 +3,7 @@ namespace Aoc.Year2022.Day11;
 using FluentAssertions;
 using Xunit;
 
-public class DayElevenTests
+public class DayFourteenTests
 {
     private readonly string[] unitTestInput = """
     Monkey 0:
