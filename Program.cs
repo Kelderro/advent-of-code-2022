@@ -11,6 +11,7 @@ Resolve<Aoc.Year2022.Day08.DayEight, int>(8);
 Resolve<Aoc.Year2022.Day09.DayNine, int>(9);
 Resolve<Aoc.Year2022.Day10.DayTen, string>(10);
 Resolve<Aoc.Year2022.Day11.DayEleven, long>(11);
+Resolve<Aoc.Year2022.Day14.DayFourteen, int>(14);
 
 void Resolve<TDayType, TReturnType>(int dayNumber)
     where TDayType : IDay<TReturnType>
