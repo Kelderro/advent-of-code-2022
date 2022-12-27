@@ -83,21 +83,6 @@ public class DayTwelveTests
     }
 
     [Fact]
-    public void PartOne_NoPathFound_ReturnException()
-    {
-        var input = """
-        aSa
-        ccc
-        bEb
-        """.Split(Environment.NewLine);
-
-        var act = () => DayTwelve.PartOne(input);
-
-        act.Should().Throw<NotSupportedException>()
-                    .WithMessage("No path found to the best signal position.");
-    }
-
-    [Fact]
     public void PartOne_OnTopStart_ReturnAnswer()
     {
         var input = this.GenerateTopToBottomArray();
@@ -162,7 +147,7 @@ public class DayTwelveTests
 
         var result = DayTwelve.PartTwo(fileInput);
 
-        result.Should().Be(440);
+        result.Should().Be(439);
     }
 
     private static string[] ReadInput(int dayNumber)
