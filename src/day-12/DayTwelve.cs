@@ -10,17 +10,38 @@ public sealed class DayTwelve : IDay<int>
 {
     public static int PartOne(string[] lines)
     {
-        var leastSteps = 0;
-
         // S = Current position (elevation always a)
         // E = Location with best signal (elevation always z)
         var map = CreateHeightMap(lines);
+        return FindShortestPath(map);
+    }
 
+    public static int PartTwo(string[] lines)
+    {
+        // S = Current position (elevation always a)
+        // E = Location with best signal (elevation always z)
+        var map = CreateHeightMap(lines);
+        var fewestSteps = int.MaxValue;
+
+        for (var i = 0; i < map.Grid.Length; i++)
+        {
+            if (map.Grid[i] == 'a')
+            {
+                map.StartPosition = i;
+                fewestSteps = int.Min(fewestSteps, FindShortestPath(map));
+            }
+        }
+
+        return fewestSteps;
+    }
+
+    private static int FindShortestPath(HeightMap map)
+    {
         var itemCovered = new HashSet<int>();
         var queue = new Queue<CellInfo>();
         queue.Enqueue(new CellInfo(map.StartPosition, 0));
         Console.Clear();
-        Console.CursorVisible = true;
+        Console.CursorVisible = false;
 
         PrintMap(map);
 
@@ -32,77 +53,89 @@ public sealed class DayTwelve : IDay<int>
             if (itemCovered.Contains(cellIndex))
                 continue;
 
+            // Keep track on the cells we have checked
             itemCovered.Add(cellIndex);
 
-            leastSteps = cellInfo.StepNumber;
-
-            // Cell above
             var cellValue = map.Grid[cellIndex];
 
-            UpdateCell(cellIndex, map);
-
-            // Check if there is a cell above the element
-            var cellUpIndex = cellIndex - map.ColumnCount;
-            if (cellUpIndex > 0)
+            // Found the highest point. No need to continue.
+            if (cellIndex == map.BestSignalPosition)
             {
-                var cellUpValue = map.Grid[cellUpIndex];
-                var offSet = cellUpValue - cellValue + 0;
-                if (offSet == 0 || offSet == 1)
-                {
-                    queue.Enqueue(new CellInfo(cellUpIndex, cellInfo.StepNumber + 1));
-                }
+                ReportShowCellUpdate(cellInfo.StepNumber, cellIndex, map);
+                Console.WriteLine();
+                Console.WriteLine($"Best signal found after {cellInfo.StepNumber} steps.");
+                Console.CursorVisible = true;
+
+                return cellInfo.StepNumber;
             }
 
-            // Cell on the right
-            var cellRightIndex = cellIndex + 1;
-            // Check if the cell on the right is not on the next line
-            if (cellRightIndex % map.ColumnCount != 0)
-            {
-                var cellRightValue = map.Grid[cellRightIndex];
-                var offSet = cellRightValue - cellValue + 0;
-                if (offSet == 0 || offSet == 1)
-                {
-                    queue.Enqueue(new CellInfo(cellRightIndex, cellInfo.StepNumber + 1));
-                }
-            }
+            ReportShowCellUpdate(cellInfo.StepNumber, cellIndex, map);
 
-            // Cell under
-            var cellDownIndex = cellIndex + map.ColumnCount;
-            // Check if the cell under it is in range
-            if (cellDownIndex < map.Grid.Length)
-            {
-                var cellDownValue = map.Grid[cellDownIndex];
-                var offSet = cellDownValue - cellValue + 0;
-                if (offSet == 0 || offSet == 1)
-                {
-                    queue.Enqueue(new CellInfo(cellDownIndex, cellInfo.StepNumber + 1));
-                }
-            }
-
-            // Cell on the left
-            var cellLeftIndex = cellIndex - 1;
-            var cellRowNumber = Math.Floor((decimal)cellIndex / map.ColumnCount);
-            var cellLeftRowNumber = Math.Floor((decimal)cellLeftIndex / map.ColumnCount);
-            // Check if the cell on the left is on the same row
-            if (cellLeftIndex >= 0
-             && cellRowNumber == cellLeftRowNumber)
-            {
-                var cellLeftValue = map.Grid[cellLeftIndex];
-                var offSet = cellLeftValue - cellValue + 0;
-                if (offSet == 0 || offSet == 1)
-                {
-                    queue.Enqueue(new CellInfo(cellLeftIndex, cellInfo.StepNumber + 1));
-                }
-            }
+            ConsiderStepUp(map, queue, cellInfo, cellIndex, cellValue);
+            ConsiderStepRight(map, queue, cellInfo, cellIndex, cellValue);
+            ConsiderStepDown(map, queue, cellInfo, cellIndex, cellValue);
+            ConsiderStepLeft(map, queue, cellInfo, cellIndex, cellValue);
         }
 
-        PrintItemsCovered(itemCovered, map);
         Console.CursorVisible = true;
+        return int.MaxValue;
+    }
 
-        Console.WriteLine();
-        Console.WriteLine();
+    private static void ConsiderCell(
+            HeightMap map,
+            Queue<CellInfo> queue,
+            CellInfo cellInfo,
+            int moveFromCellIndex,
+            char moveFromCellValue,
+            int moveToCellIndex,
+            bool canMakeMove)
+    {
+        if (canMakeMove)
+        {
+            var cellRightValue = map.Grid[moveToCellIndex];
+            var offSet = cellRightValue - moveFromCellValue + 0;
+            if (offSet <= 1)
+            {
+                queue.Enqueue(new CellInfo(moveToCellIndex, cellInfo.StepNumber + 1));
+            }
+        }
+    }
 
-        return leastSteps;
+    private static void ConsiderStepUp(HeightMap map, Queue<CellInfo> queue, CellInfo cellInfo, int cellIndex, char cellValue)
+    {
+        var moveToIndex = cellIndex - map.ColumnCount;
+        var canMakeMove = moveToIndex >= 0;
+
+        ConsiderCell(map, queue, cellInfo, cellIndex, cellValue, moveToIndex, canMakeMove);
+    }
+
+    private static void ConsiderStepRight(HeightMap map, Queue<CellInfo> queue, CellInfo cellInfo, int cellIndex, char cellValue)
+    {
+        var moveToIndex = cellIndex + 1;
+        var canMakeMove = moveToIndex % map.ColumnCount != 0;
+
+        ConsiderCell(map, queue, cellInfo, cellIndex, cellValue, moveToIndex, canMakeMove);
+    }
+
+    private static void ConsiderStepDown(HeightMap map, Queue<CellInfo> queue, CellInfo cellInfo, int cellIndex, char cellValue)
+    {
+        var moveToIndex = cellIndex + map.ColumnCount;
+        var canMakeMove = moveToIndex < map.Grid.Length;
+
+        ConsiderCell(map, queue, cellInfo, cellIndex, cellValue, moveToIndex, canMakeMove);
+    }
+
+    private static void ConsiderStepLeft(HeightMap map, Queue<CellInfo> queue, CellInfo cellInfo, int cellIndex, char cellValue)
+    {
+        var moveToIndex = cellIndex - 1;
+
+        var currentCellRowNumber = Math.Floor((decimal)cellIndex / map.ColumnCount);
+        var moveToColumnNumber = Math.Floor((decimal)moveToIndex / map.ColumnCount);
+
+        var canMakeMove = moveToIndex >= 0
+            && currentCellRowNumber == moveToColumnNumber;
+
+        ConsiderCell(map, queue, cellInfo, cellIndex, cellValue, moveToIndex, canMakeMove);
     }
 
     private static void PrintMap(HeightMap map)
@@ -123,40 +156,20 @@ public sealed class DayTwelve : IDay<int>
 
         Console.ForegroundColor = ConsoleColor.DarkGray;
         Console.WriteLine(sb.ToString());
+        Console.ResetColor();
     }
 
-    private static void UpdateCell(int cellIndex, HeightMap map)
+    private static void ReportShowCellUpdate(int stepNumber, int cellIndex, HeightMap map)
     {
-        Console.CursorVisible = false;
         var column = cellIndex % map.ColumnCount;
         var row = (int)Math.Floor((float)cellIndex / map.ColumnCount);
         Console.SetCursorPosition(column, row);
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.Write(map.Grid[cellIndex]);
-        Thread.Sleep(5);
-        Console.CursorVisible = true;
-    }
+        Console.ResetColor();
 
-    private static void PrintItemsCovered(HashSet<int> itemCovered, HeightMap map)
-    {
-        Console.SetCursorPosition(0, 0);
-        for (var i = 0; i < map.RowCount * map.ColumnCount; i++)
-        {
-            if (i % map.ColumnCount == 0)
-            {
-                Console.WriteLine();
-            }
-
-            Console.ForegroundColor = itemCovered.Contains(i)
-                ? ConsoleColor.DarkGreen
-                : ConsoleColor.DarkGray;
-            Console.Write(map.Grid[i]);
-        }
-    }
-
-    public static int PartTwo(string[] lines)
-    {
-        return 0;
+        Console.SetCursorPosition(0, map.RowCount + 1);
+        Console.WriteLine($"Number of steps taken: {stepNumber}.");
     }
 
     private static HeightMap CreateHeightMap(string[] lines)
@@ -188,12 +201,7 @@ public sealed class DayTwelve : IDay<int>
                 if (chr == 'E')
                 {
                     bestSignalPosition = gridPosition;
-                    chr = '{';
-                }
-
-                if (chr == '!')
-                {
-                    Console.WriteLine();
+                    chr = 'z';
                 }
 
                 grid[gridPosition] = chr;
@@ -242,7 +250,7 @@ public sealed class DayTwelve : IDay<int>
 
         required public int ColumnCount { get; init; }
 
-        required public int StartPosition { get; init; }
+        required public int StartPosition { get; set; }
 
         required public int BestSignalPosition { get; init; }
 

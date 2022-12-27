@@ -1,5 +1,6 @@
 namespace Aoc.Year2022.Day12;
 
+using System.Text;
 using FluentAssertions;
 using Xunit;
 
@@ -13,6 +14,63 @@ public class DayTwelveTests
     abdefghi
     """.Split(Environment.NewLine);
 
+    private string[] GenerateTopToBottomArray()
+    {
+        var list = new List<String>();
+        for (var i = 0; i < 26; i++)
+        {
+            var chr = (char)(i + 97);
+            list.Add(String.Concat(chr, chr, chr));
+        }
+
+        string[] returnArray = list.ToArray();
+
+        returnArray[0] = "aSa";
+        returnArray[25] = "zEz";
+
+        return returnArray;
+    }
+
+    private string[] GenerateLeftToRightArray()
+    {
+        var list = new List<String>();
+
+        for (var row = 0; row < 5; row++)
+        {
+            var line = new StringBuilder();
+            for (var column = 0; column < 26; column++)
+            {
+                var chr = (char)(column + 97);
+                if (column == 0 && row == 2)
+                {
+                    chr = 'S';
+                }
+                if (column == 25 && row == 2)
+                {
+                    chr = 'E';
+                }
+                line.Append(chr);
+            }
+            list.Add(line.ToString());
+        }
+
+        string[] returnArray = list.ToArray();
+
+        return returnArray;
+    }
+
+    private string[] GenerateBottomToTopArray()
+    {
+        return GenerateTopToBottomArray().Reverse()
+                                         .ToArray();
+    }
+
+    private string[] GenerateRightToLeftArray()
+    {
+        return GenerateLeftToRightArray().Reverse()
+                                         .ToArray();
+    }
+
     [Fact]
     public void PartOne_OnExampleTestCase_ReturnFewestStepsRequired()
     {
@@ -22,13 +80,86 @@ public class DayTwelveTests
     }
 
     [Fact]
+    public void PartOne_NoPathFound_ReturnException()
+    {
+        var input = """
+        aSa
+        ccc
+        bEb
+        """.Split(Environment.NewLine);
+
+        var act = () => DayTwelve.PartOne(input);
+
+        act.Should().Throw<NotSupportedException>()
+                    .WithMessage("No path found to the best signal position.");
+    }
+
+    [Fact]
+    public void PartOne_OnTopStart_ReturnAnswer()
+    {
+        var input = GenerateTopToBottomArray();
+
+        var steps = DayTwelve.PartOne(input);
+
+        Assert.Equal(25, steps);
+    }
+
+    [Fact]
+    public void PartOne_OnLeftStart_ReturnAnswer()
+    {
+        var input = GenerateLeftToRightArray();
+
+        var steps = DayTwelve.PartOne(input);
+
+        Assert.Equal(25, steps);
+    }
+
+    [Fact]
+    public void PartOne_OnBottomStart_ReturnAnswer()
+    {
+        var input = GenerateBottomToTopArray();
+
+        var steps = DayTwelve.PartOne(input);
+
+        Assert.Equal(25, steps);
+    }
+
+    [Fact]
+    public void PartOne_OnRightStart_ReturnAnswer()
+    {
+        var input = GenerateRightToLeftArray();
+
+        var steps = DayTwelve.PartOne(input);
+
+        Assert.Equal(25, steps);
+    }
+
+    [Fact]
     public void PartOne_OnUsingInputFile_ReturnFewestSteps()
     {
         var fileInput = ReadInput(12);
 
         var result = DayTwelve.PartOne(fileInput);
 
-        result.Should().BeGreaterThan(319);
+        result.Should().Be(440);
+    }
+
+    [Fact]
+    public void PartTwo_OnExampleTestCase_ReturnFewestStepsRequired()
+    {
+        var result = DayTwelve.PartTwo(this.unitTestInput);
+
+        result.Should().Be(29);
+    }
+
+    [Fact]
+    public void PartTwo_OnUsingInputFile_ReturnFewestSteps()
+    {
+        var fileInput = ReadInput(12);
+
+        var result = DayTwelve.PartTwo(fileInput);
+
+        result.Should().Be(440);
     }
 
     private static string[] ReadInput(int dayNumber)
