@@ -40,7 +40,6 @@ public sealed class DayTwelve : IDay<int>
         var itemCovered = new HashSet<int>();
         var queue = new Queue<CellInfo>();
         queue.Enqueue(new CellInfo(map.StartPosition, 0));
-        Console.Clear();
         Console.CursorVisible = false;
 
         PrintMap(map);
@@ -141,7 +140,22 @@ public sealed class DayTwelve : IDay<int>
 
     private static void PrintMap(HeightMap map)
     {
-        Console.Clear();
+        try
+        {
+            Console.Clear();
+        }
+        catch (System.IO.IOException ex)
+        {
+            // Swollow exception only when the error message match
+            // This exception happens on the build server
+            // as Console.Clear is not supported on a Windows machine.
+            if (!ex.Message.Equals("System.IO.IOException : The handle is invalid.", StringComparison.InvariantCultureIgnoreCase))
+            {
+                // Throw as the error message does not match
+                throw;
+            }
+        }
+
         Console.SetCursorPosition(0, 0);
 
         var sb = new StringBuilder();
