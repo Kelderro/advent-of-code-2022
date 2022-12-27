@@ -1,10 +1,10 @@
-
-using System.Text;
 /// <summary>
 /// Day 12: Hill Climbing Algorithm
 /// https://adventofcode.com/2022/day/12.
 /// </summary>
 namespace Aoc.Year2022.Day12;
+
+using System.Text;
 
 public sealed class DayTwelve : IDay<int>
 {
@@ -51,7 +51,9 @@ public sealed class DayTwelve : IDay<int>
             var cellIndex = cellInfo.Index;
 
             if (itemCovered.Contains(cellIndex))
+            {
                 continue;
+            }
 
             // Keep track on the cells we have checked
             itemCovered.Add(cellIndex);
@@ -85,7 +87,6 @@ public sealed class DayTwelve : IDay<int>
             HeightMap map,
             Queue<CellInfo> queue,
             CellInfo cellInfo,
-            int moveFromCellIndex,
             char moveFromCellValue,
             int moveToCellIndex,
             bool canMakeMove)
@@ -106,7 +107,7 @@ public sealed class DayTwelve : IDay<int>
         var moveToIndex = cellIndex - map.ColumnCount;
         var canMakeMove = moveToIndex >= 0;
 
-        ConsiderCell(map, queue, cellInfo, cellIndex, cellValue, moveToIndex, canMakeMove);
+        ConsiderCell(map, queue, cellInfo, cellValue, moveToIndex, canMakeMove);
     }
 
     private static void ConsiderStepRight(HeightMap map, Queue<CellInfo> queue, CellInfo cellInfo, int cellIndex, char cellValue)
@@ -114,7 +115,7 @@ public sealed class DayTwelve : IDay<int>
         var moveToIndex = cellIndex + 1;
         var canMakeMove = moveToIndex % map.ColumnCount != 0;
 
-        ConsiderCell(map, queue, cellInfo, cellIndex, cellValue, moveToIndex, canMakeMove);
+        ConsiderCell(map, queue, cellInfo, cellValue, moveToIndex, canMakeMove);
     }
 
     private static void ConsiderStepDown(HeightMap map, Queue<CellInfo> queue, CellInfo cellInfo, int cellIndex, char cellValue)
@@ -122,7 +123,7 @@ public sealed class DayTwelve : IDay<int>
         var moveToIndex = cellIndex + map.ColumnCount;
         var canMakeMove = moveToIndex < map.Grid.Length;
 
-        ConsiderCell(map, queue, cellInfo, cellIndex, cellValue, moveToIndex, canMakeMove);
+        ConsiderCell(map, queue, cellInfo, cellValue, moveToIndex, canMakeMove);
     }
 
     private static void ConsiderStepLeft(HeightMap map, Queue<CellInfo> queue, CellInfo cellInfo, int cellIndex, char cellValue)
@@ -135,7 +136,7 @@ public sealed class DayTwelve : IDay<int>
         var canMakeMove = moveToIndex >= 0
             && currentCellRowNumber == moveToColumnNumber;
 
-        ConsiderCell(map, queue, cellInfo, cellIndex, cellValue, moveToIndex, canMakeMove);
+        ConsiderCell(map, queue, cellInfo, cellValue, moveToIndex, canMakeMove);
     }
 
     private static void PrintMap(HeightMap map)
@@ -190,7 +191,7 @@ public sealed class DayTwelve : IDay<int>
             for (var column = 0; column < lines[0].Length; column++)
             {
                 var chr = lines[row][column];
-                var gridPosition = row * lines[0].Length + column;
+                var gridPosition = (row * lines[0].Length) + column;
 
                 if (chr == 'S')
                 {

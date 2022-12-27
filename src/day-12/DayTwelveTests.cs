@@ -14,13 +14,21 @@ public class DayTwelveTests
     abdefghi
     """.Split(Environment.NewLine);
 
+    [Fact]
+    public void PartOne_OnExampleTestCase_ReturnFewestStepsRequired()
+    {
+        var result = DayTwelve.PartOne(this.unitTestInput);
+
+        result.Should().Be(31);
+    }
+
     private string[] GenerateTopToBottomArray()
     {
-        var list = new List<String>();
+        var list = new List<string>();
         for (var i = 0; i < 26; i++)
         {
             var chr = (char)(i + 97);
-            list.Add(String.Concat(chr, chr, chr));
+            list.Add(string.Concat(chr, chr, chr));
         }
 
         string[] returnArray = list.ToArray();
@@ -33,7 +41,7 @@ public class DayTwelveTests
 
     private string[] GenerateLeftToRightArray()
     {
-        var list = new List<String>();
+        var list = new List<string>();
 
         for (var row = 0; row < 5; row++)
         {
@@ -45,12 +53,15 @@ public class DayTwelveTests
                 {
                     chr = 'S';
                 }
+
                 if (column == 25 && row == 2)
                 {
                     chr = 'E';
                 }
+
                 line.Append(chr);
             }
+
             list.Add(line.ToString());
         }
 
@@ -61,22 +72,14 @@ public class DayTwelveTests
 
     private string[] GenerateBottomToTopArray()
     {
-        return GenerateTopToBottomArray().Reverse()
+        return this.GenerateTopToBottomArray().Reverse()
                                          .ToArray();
     }
 
     private string[] GenerateRightToLeftArray()
     {
-        return GenerateLeftToRightArray().Reverse()
+        return this.GenerateLeftToRightArray().Reverse()
                                          .ToArray();
-    }
-
-    [Fact]
-    public void PartOne_OnExampleTestCase_ReturnFewestStepsRequired()
-    {
-        var result = DayTwelve.PartOne(this.unitTestInput);
-
-        result.Should().Be(31);
     }
 
     [Fact]
@@ -97,7 +100,7 @@ public class DayTwelveTests
     [Fact]
     public void PartOne_OnTopStart_ReturnAnswer()
     {
-        var input = GenerateTopToBottomArray();
+        var input = this.GenerateTopToBottomArray();
 
         var steps = DayTwelve.PartOne(input);
 
@@ -107,7 +110,7 @@ public class DayTwelveTests
     [Fact]
     public void PartOne_OnLeftStart_ReturnAnswer()
     {
-        var input = GenerateLeftToRightArray();
+        var input = this.GenerateLeftToRightArray();
 
         var steps = DayTwelve.PartOne(input);
 
@@ -117,7 +120,7 @@ public class DayTwelveTests
     [Fact]
     public void PartOne_OnBottomStart_ReturnAnswer()
     {
-        var input = GenerateBottomToTopArray();
+        var input = this.GenerateBottomToTopArray();
 
         var steps = DayTwelve.PartOne(input);
 
@@ -127,7 +130,7 @@ public class DayTwelveTests
     [Fact]
     public void PartOne_OnRightStart_ReturnAnswer()
     {
-        var input = GenerateRightToLeftArray();
+        var input = this.GenerateRightToLeftArray();
 
         var steps = DayTwelve.PartOne(input);
 
