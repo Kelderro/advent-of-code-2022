@@ -159,18 +159,14 @@ public sealed class DayTwelve : IDay<int>
         }
         catch (System.IO.IOException ex)
         {
-            Console.WriteLine("RKELDER:");
-            Console.WriteLine($"'{ex.Message}'");
             // Swollow exception only when the error message match
             // This exception happens on the build server
             // as for example Console.Clear is not supported on a Windows machine.
             if (!ex.Message.Equals("The handle is invalid.", StringComparison.InvariantCultureIgnoreCase))
             {
-                Console.WriteLine("Exception message is different!");
                 // Throw as the error message does not match
                 throw;
             }
-            Console.WriteLine("Exception message is what was excepted.");
         }
     }
 
@@ -195,7 +191,7 @@ public sealed class DayTwelve : IDay<int>
             // Swollow exception only when the error message match
             // This exception happens on the build server
             // as for example Console.Clear is not supported on a Windows machine.
-            if (!ex.Message.Equals("System.IO.IOException : The handle is invalid.", StringComparison.InvariantCultureIgnoreCase))
+            if (!ex.Message.Equals("The handle is invalid.", StringComparison.InvariantCultureIgnoreCase))
             {
                 // Throw as the error message does not match
                 throw;
