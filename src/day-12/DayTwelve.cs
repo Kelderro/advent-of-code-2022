@@ -40,7 +40,6 @@ public sealed class DayTwelve : IDay<int>
         var itemCovered = new HashSet<int>();
         var queue = new Queue<CellInfo>();
         queue.Enqueue(new CellInfo(map.StartPosition, 0));
-        Console.CursorVisible = false;
 
         PrintMap(map);
 
@@ -65,7 +64,6 @@ public sealed class DayTwelve : IDay<int>
                 ReportShowCellUpdate(cellInfo.StepNumber, cellIndex, map);
                 Console.WriteLine();
                 Console.WriteLine($"Best signal found after {cellInfo.StepNumber} steps.");
-                Console.CursorVisible = true;
 
                 return cellInfo.StepNumber;
             }
@@ -78,7 +76,6 @@ public sealed class DayTwelve : IDay<int>
             ConsiderStepLeft(map, queue, cellInfo, cellIndex, cellValue);
         }
 
-        Console.CursorVisible = true;
         return int.MaxValue;
     }
 
@@ -143,48 +140,63 @@ public sealed class DayTwelve : IDay<int>
         try
         {
             Console.Clear();
+            Console.SetCursorPosition(0, 0);
+
+            var sb = new StringBuilder();
+            for (var i = 0; i < map.RowCount * map.ColumnCount; i++)
+            {
+                if (i % map.ColumnCount == 0 && i != 0)
+                {
+                    sb.AppendLine();
+                }
+
+                sb.Append(map.Grid[i]);
+            }
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine(sb.ToString());
+            Console.ResetColor();
         }
         catch (System.IO.IOException ex)
         {
             // Swollow exception only when the error message match
             // This exception happens on the build server
-            // as Console.Clear is not supported on a Windows machine.
+            // as for example Console.Clear is not supported on a Windows machine.
             if (!ex.Message.Equals("System.IO.IOException : The handle is invalid.", StringComparison.InvariantCultureIgnoreCase))
             {
                 // Throw as the error message does not match
                 throw;
             }
         }
-
-        Console.SetCursorPosition(0, 0);
-
-        var sb = new StringBuilder();
-        for (var i = 0; i < map.RowCount * map.ColumnCount; i++)
-        {
-            if (i % map.ColumnCount == 0 && i != 0)
-            {
-                sb.AppendLine();
-            }
-
-            sb.Append(map.Grid[i]);
-        }
-
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.WriteLine(sb.ToString());
-        Console.ResetColor();
     }
 
     private static void ReportShowCellUpdate(int stepNumber, int cellIndex, HeightMap map)
     {
-        var column = cellIndex % map.ColumnCount;
-        var row = (int)Math.Floor((float)cellIndex / map.ColumnCount);
-        Console.SetCursorPosition(column, row);
-        Console.ForegroundColor = ConsoleColor.DarkGreen;
-        Console.Write(map.Grid[cellIndex]);
-        Console.ResetColor();
+        try
+        {
+            Console.CursorVisible = false;
+            var column = cellIndex % map.ColumnCount;
+            var row = (int)Math.Floor((float)cellIndex / map.ColumnCount);
+            Console.SetCursorPosition(column, row);
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write(map.Grid[cellIndex]);
+            Console.ResetColor();
 
-        Console.SetCursorPosition(0, map.RowCount + 1);
-        Console.WriteLine($"Number of steps taken: {stepNumber}.");
+            Console.SetCursorPosition(0, map.RowCount + 1);
+            Console.WriteLine($"Number of steps taken: {stepNumber}.");
+            Console.CursorVisible = true;
+        }
+        catch (System.IO.IOException ex)
+        {
+            // Swollow exception only when the error message match
+            // This exception happens on the build server
+            // as for example Console.Clear is not supported on a Windows machine.
+            if (!ex.Message.Equals("System.IO.IOException : The handle is invalid.", StringComparison.InvariantCultureIgnoreCase))
+            {
+                // Throw as the error message does not match
+                throw;
+            }
+        }
     }
 
     private static HeightMap CreateHeightMap(string[] lines)
