@@ -6,7 +6,7 @@ namespace Aoc.Year2022.Day11;
 
 using System.Text;
 
-public abstract class DayEleven : IDay<long>
+public sealed class DayEleven : IDay<long>
 {
     /// <summary>
     /// Figure out which monkeys to chase by counting how many items they
