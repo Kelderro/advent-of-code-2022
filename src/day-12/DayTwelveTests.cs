@@ -22,66 +22,6 @@ public class DayTwelveTests
         result.Should().Be(31);
     }
 
-    private string[] GenerateTopToBottomArray()
-    {
-        var list = new List<string>();
-        for (var i = 0; i < 26; i++)
-        {
-            var chr = (char)(i + 97);
-            list.Add(string.Concat(chr, chr, chr));
-        }
-
-        string[] returnArray = list.ToArray();
-
-        returnArray[0] = "aSa";
-        returnArray[25] = "zEz";
-
-        return returnArray;
-    }
-
-    private string[] GenerateLeftToRightArray()
-    {
-        var list = new List<string>();
-
-        for (var row = 0; row < 5; row++)
-        {
-            var line = new StringBuilder();
-            for (var column = 0; column < 26; column++)
-            {
-                var chr = (char)(column + 97);
-                if (column == 0 && row == 2)
-                {
-                    chr = 'S';
-                }
-
-                if (column == 25 && row == 2)
-                {
-                    chr = 'E';
-                }
-
-                line.Append(chr);
-            }
-
-            list.Add(line.ToString());
-        }
-
-        string[] returnArray = list.ToArray();
-
-        return returnArray;
-    }
-
-    private string[] GenerateBottomToTopArray()
-    {
-        return this.GenerateTopToBottomArray().Reverse()
-                                         .ToArray();
-    }
-
-    private string[] GenerateRightToLeftArray()
-    {
-        return this.GenerateLeftToRightArray().Reverse()
-                                         .ToArray();
-    }
-
     [Fact]
     public void PartOne_OnTopStart_ReturnAnswer()
     {
@@ -153,5 +93,65 @@ public class DayTwelveTests
     private static string[] ReadInput(int dayNumber)
     {
         return File.ReadAllLines($"./src/day-{dayNumber:00}/input.txt");
+    }
+
+    private string[] GenerateTopToBottomArray()
+    {
+        var list = new List<string>();
+        for (var i = 0; i < 26; i++)
+        {
+            var chr = (char)(i + 97);
+            list.Add(string.Concat(chr, chr, chr));
+        }
+
+        string[] returnArray = list.ToArray();
+
+        returnArray[0] = "aSa";
+        returnArray[25] = "zEz";
+
+        return returnArray;
+    }
+
+    private string[] GenerateLeftToRightArray()
+    {
+        var list = new List<string>();
+
+        for (var row = 0; row < 5; row++)
+        {
+            var line = new StringBuilder();
+            for (var column = 0; column < 26; column++)
+            {
+                var chr = (char)(column + 97);
+                if (column == 0 && row == 2)
+                {
+                    chr = 'S';
+                }
+
+                if (column == 25 && row == 2)
+                {
+                    chr = 'E';
+                }
+
+                line.Append(chr);
+            }
+
+            list.Add(line.ToString());
+        }
+
+        string[] returnArray = list.ToArray();
+
+        return returnArray;
+    }
+
+    private string[] GenerateBottomToTopArray()
+    {
+        return this.GenerateTopToBottomArray().Reverse()
+                                         .ToArray();
+    }
+
+    private string[] GenerateRightToLeftArray()
+    {
+        return this.GenerateLeftToRightArray().Reverse()
+                                         .ToArray();
     }
 }
