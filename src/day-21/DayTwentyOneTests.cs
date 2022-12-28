@@ -1,7 +1,7 @@
+namespace Aoc.Year2022.Day21;
+
 using FluentAssertions;
 using Xunit;
-
-namespace Aoc.Year2022.Day21;
 
 public class DayTwentyOneTests
 {
@@ -64,99 +64,87 @@ public class DayTwentyOneTests
     }
 
     [Theory]
-    [InlineData("""
+
+    // Addition
+    [InlineData(
+    """
     root: AAAA + BBBB
     BBBB: 10
     AAAA: humn + CCCC
     CCCC: 3
     humn: 0
-    """, 7)]
-    [InlineData("""
+    """,
+    7)]
+    [InlineData(
+    """
     root: AAAA + BBBB
     BBBB: 10
     AAAA: CCCC + humn
     CCCC: 3
     humn: 0
-    """, 7)]
-    public void PartTwo_OnAdditionNumber_ReturnHumnNumber(
-        string input,
-        int expectedHumn)
-    {
-        var inputLines = input.Split(Environment.NewLine);
+    """,
+    7)]
 
-        var result = DayTwentyOne.PartTwo(inputLines);
-
-        result.Should().Be(7);
-    }
-
-    [Theory]
-    [InlineData("""
+    // Substraction
+    [InlineData(
+    """
     root: AAAA + BBBB
     BBBB: 10
     AAAA: humn - CCCC
     CCCC: 2
     humn: 0
-    """, 12)]
-    [InlineData("""
+    """,
+    12)]
+    [InlineData(
+    """
     root: AAAA + BBBB
     BBBB: 10
     AAAA: CCCC - humn
     CCCC: 2
     humn: 0
-    """, -8)]
-    public void PartTwo_OnSubtractionNumber_ReturnHumnNumber(
-        string input,
-        int expectedHumn)
-    {
-        var inputLines = input.Split(Environment.NewLine);
+    """,
+    -8)]
 
-        var result = DayTwentyOne.PartTwo(inputLines);
-
-        result.Should().Be(expectedHumn);
-    }
-
-    [Theory]
-    [InlineData("""
+    // Division
+    [InlineData(
+    """
     root: AAAA + BBBB
     BBBB: 10
     AAAA: humn / CCCC
     CCCC: 2
     humn: 0
-    """, 20L)]
-    [InlineData("""
+    """,
+    20L)]
+    [InlineData(
+    """
     root: AAAA + BBBB
     BBBB: 10
     AAAA: CCCC / humn
     CCCC: 20
     humn: 0
-    """, 2L)]
-    public void PartTwo_OnDivisionNumber_ReturnHumnNumber(
-    string input,
-    long expectedHumn)
-    {
-        var inputLines = input.Split(Environment.NewLine);
+    """,
+    2L)]
 
-        var result = DayTwentyOne.PartTwo(inputLines);
-
-        result.Should().Be(expectedHumn);
-    }
-
-    [Theory]
-    [InlineData("""
+    // Multiplication
+    [InlineData(
+    """
     root: AAAA + BBBB
     BBBB: 10
     AAAA: humn * CCCC
     CCCC: 2
     humn: 0
-    """, 5)]
-    [InlineData("""
+    """,
+    5)]
+    [InlineData(
+    """
     root: AAAA + BBBB
     BBBB: 10
     AAAA: CCCC * humn
     CCCC: 2
     humn: 0
-    """, 5)]
-    public void PartTwo_OnMultiplicationNumber_ReturnHumnNumber(
+    """,
+    5)]
+    public void PartTwo_OnNumber_ReturnHumnNumber(
         string input,
         int expectedHumn)
     {

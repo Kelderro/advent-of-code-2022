@@ -1,15 +1,24 @@
-
-using System.Numerics;
 /// <summary>
 /// Day 21: Monkey Math
 /// https://adventofcode.com/2022/day/21
 /// </summary>
 namespace Aoc.Year2022.Day21;
 
+using System.Numerics;
+
 public sealed class DayTwentyOne : IDay<long>
 {
     private const string RootKeyName = "root";
     private const string HumanKeyName = "humn";
+
+    private static readonly Dictionary<char, Func<long, long, bool, long>> Operators = new()
+    {
+        { '+', (long a, long b, bool reverse) => reverse ? a - b : a + b },
+        { '-', (long a, long b, bool reverse) => reverse ? a + b : a - b },
+        { '*', (long a, long b, bool reverse) => reverse ? a / b : a * b },
+        { '/', (long a, long b, bool reverse) => reverse ? a * b : a / b },
+        { '=', (long _, long b, bool _) => b },
+    };
 
     public static long PartOne(string[] lines)
     {
@@ -141,14 +150,6 @@ public sealed class DayTwentyOne : IDay<long>
         return value;
     }
 
-    private static readonly Dictionary<char, Func<long, long, bool, long>> Operators = new() {
-        { '+', (long a, long b, bool reverse) => reverse ? a - b : a + b },
-        { '-', (long a, long b, bool reverse) => reverse ? a + b : a - b },
-        { '*', (long a, long b, bool reverse) => reverse ? a / b : a * b },
-        { '/', (long a, long b, bool reverse) => reverse ? a * b : a / b },
-        { '=', (long _, long b, bool _) => b },
-    };
-
     private static IDictionary<string, Monkey> ParseMonkeys(string[] lines)
     {
         var monkeys = new List<Monkey>();
@@ -200,9 +201,9 @@ public sealed class DayTwentyOne : IDay<long>
     {
         required public string MonkeyNameLeft { get; init; }
 
-        public Func<long, long, bool, long> Operator => Operators[OperatorChar];
+        public Func<long, long, bool, long> Operator => Operators[this.OperatorChar];
 
-        required public Char OperatorChar { get; set; }
+        required public char OperatorChar { get; set; }
 
         required public string MonkeyNameRight { get; init; }
     }
