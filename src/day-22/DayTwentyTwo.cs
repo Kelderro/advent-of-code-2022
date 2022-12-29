@@ -8,8 +8,7 @@ public sealed class DayTwentyTwo : IDay<int>
 {
     // Open tile: .
     // Solid wall: #
-
-    private static Facing[]? Facings;
+    private static Facing[]? facings;
 
     public static int PartOne(string[] lines)
     {
@@ -19,17 +18,22 @@ public sealed class DayTwentyTwo : IDay<int>
         return password;
     }
 
+    public static int PartTwo(string[] lines)
+    {
+        throw new NotImplementedException();
+    }
+
     private static (int EndPosition, Facing facing) Walk((char[] Map, int ColumnCount) map, IList<(int Steps, char Turn)> path)
     {
-        if (Facings == null)
+        if (facings == null)
         {
-            Facings = CreateFacings();
-        };
+            facings = CreateFacings();
+        }
 
         Console.CursorVisible = false;
 
         // Initially, you are facing to the right (from the perspective of how the map is drawn).
-        var facing = Facings.Single(x => x.Name.Equals("Right", StringComparison.InvariantCultureIgnoreCase));
+        var facing = facings.Single(x => x.Name.Equals("Right", StringComparison.InvariantCultureIgnoreCase));
 
         // You begin the path in the leftmost open tile of the top row of tiles.
         var position = Array.IndexOf(map.Map, '.') - 1;
@@ -43,6 +47,7 @@ public sealed class DayTwentyTwo : IDay<int>
             {
                 Console.WriteLine($" - {i - 1,3}");
             }
+
             if (map.Map[i] == '#')
             {
                 Console.ForegroundColor = ConsoleColor.White;
@@ -50,14 +55,18 @@ public sealed class DayTwentyTwo : IDay<int>
                 Console.ResetColor();
                 continue;
             }
+
             Console.Write(map.Map[i]);
         }
+
         Console.WriteLine($" - {map.Map.Length - 1,3}");
 
         foreach (var p in path)
         {
             if (p.Turn != default(char))
+            {
                 facing = Turn(p.Turn.Equals('R'), facing);
+            }
 
             Console.SetCursorPosition(0, rowCount);
             Console.Write($"\nDirection: {facing.Name}");
@@ -91,6 +100,7 @@ public sealed class DayTwentyTwo : IDay<int>
                 Thread.Sleep(2);
             }
         }
+
         Console.SetCursorPosition(0, rowCount + 4);
         Console.CursorVisible = true;
         return (position, facing);
@@ -112,85 +122,80 @@ public sealed class DayTwentyTwo : IDay<int>
         var columnNumber = (endPosition % rowLength) + 1;
         var rowNumber = (endPosition / rowLength) + 1;
 
-        return multiplyRowNumberBy * rowNumber
-             + multiplyColumnNumberBy * columnNumber
+        return (multiplyRowNumberBy * rowNumber)
+             + (multiplyColumnNumberBy * columnNumber)
              + facing.Score;
     }
 
     private static Facing[] CreateFacings()
     {
-        return new Facing[] {
-            new Facing {
+        return new Facing[]
+        {
+            new Facing
+            {
                 Name = "Right",
                 Score = 0,
                 Symbol = '>',
                 NextPosition = (position, columnCount, rowCount) =>
                     (position + 1) % columnCount == 0
                         ? (position + 1) - columnCount
-                        : position + 1 },
-            new Facing {
+                        : position + 1,
+            },
+            new Facing
+            {
                 Name = "Down",
                 Score = 1,
                 Symbol = 'V',
                 NextPosition = (position, columnCount, rowCount) =>
                     position / columnCount == rowCount - 1
                         ? position % columnCount
-                        : position + columnCount },
-            new Facing {
+                        : position + columnCount,
+            },
+            new Facing
+            {
                 Name = "Left",
                 Score = 2,
                 Symbol = '<',
                 NextPosition = (position, columnCount, rowCount) =>
                     position % columnCount == 0
                         ? position + (columnCount - 1)
-                        : position - 1 },
-        new Facing {
+                        : position - 1,
+            },
+            new Facing
+        {
                 Name = "Up",
                 Score = 3,
                 Symbol = '^',
                 NextPosition = (position, columnCount, rowCount) =>
                     (position / columnCount == 0)
-                        ? position % columnCount + ((rowCount - 1) * columnCount)
-                        : position - columnCount }
+                        ? (position % columnCount) + ((rowCount - 1) * columnCount)
+                        : position - columnCount,
+        },
         };
     }
 
     private static Facing Turn(bool clockWise, Facing currentFacing)
     {
-        if (Facings == null)
+        if (facings == null)
         {
-            Facings = CreateFacings();
-        };
+            facings = CreateFacings();
+        }
 
-        var indexOf = Array.IndexOf(Facings, currentFacing);
+        var indexOf = Array.IndexOf(facings, currentFacing);
 
         if (clockWise)
         {
             indexOf++;
-            return Facings[indexOf % Facings.Length];
+            return facings[indexOf % facings.Length];
         }
 
         indexOf--;
         if (indexOf < 0)
-            indexOf = Facings.Length - 1;
+        {
+            indexOf = facings.Length - 1;
+        }
 
-        return Facings[indexOf];
-    }
-
-    public class Facing
-    {
-        required public string Name { get; init; }
-
-        required public int Score { get; init; }
-
-        required public char Symbol { get; init; }
-
-        required public Func<int, int, int, int> NextPosition { get; init; }
-    }
-
-    public static int PartTwo(string[] lines)
-    {
-        throw new NotImplementedException();
+        return facings[indexOf];
     }
 
     private static ((char[] Map, int LineLength), IList<(int Steps, char Turn)>) Parse(string[] lines)
@@ -210,6 +215,17 @@ public sealed class DayTwentyTwo : IDay<int>
         var path = ParsePath(pathLine);
 
         return (map, path);
+    }
+
+    public class Facing
+    {
+        required public string Name { get; init; }
+
+        required public int Score { get; init; }
+
+        required public char Symbol { get; init; }
+
+        required public Func<int, int, int, int> NextPosition { get; init; }
     }
 
     private static (char[] Map, int LineLength) ParseMap(string[] mapLines)
@@ -236,11 +252,12 @@ public sealed class DayTwentyTwo : IDay<int>
 
         foreach (var chr in pathLine)
         {
-            if (Char.IsDigit(chr))
+            if (char.IsDigit(chr))
             {
                 steps += chr;
                 continue;
             }
+
             path.Add((int.Parse(steps), turn));
 
             turn = chr;
