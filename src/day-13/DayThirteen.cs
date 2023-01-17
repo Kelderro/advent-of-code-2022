@@ -1,10 +1,10 @@
-using System.Text.Json.Nodes;
-
 /// <summary>
 /// Day 13: Distress Signal
 /// https://adventofcode.com/2022/day/13.
 /// </summary>
 namespace Aoc.Year2022.Day13;
+
+using System.Text.Json.Nodes;
 
 public sealed class DayThirteen : IDay<int>
 {
@@ -24,7 +24,10 @@ public sealed class DayThirteen : IDay<int>
             var jsonRight = JsonNode.Parse(right);
 
             var isCorrrect = Compare(jsonLeft, jsonRight);
-            if (isCorrrect == true) correctPairs += pairIndex;
+            if (isCorrrect == true)
+            {
+                correctPairs += pairIndex;
+            }
         }
 
         return correctPairs;
@@ -49,8 +52,15 @@ public sealed class DayThirteen : IDay<int>
         }
 
         // If exactly one value is an integer, convert the integer to a list which contains that integer as its only value
-        if (left is not JsonArray leftArray) leftArray = new JsonArray(left.GetValue<int>());
-        if (right is not JsonArray rightArray) rightArray = new JsonArray(right.GetValue<int>());
+        if (left is not JsonArray leftArray)
+        {
+            leftArray = new JsonArray(left.GetValue<int>());
+        }
+
+        if (right is not JsonArray rightArray)
+        {
+            rightArray = new JsonArray(right.GetValue<int>());
+        }
 
         // If both values are lists, compare the first value of each list, then the second value, and so on.
         for (var i = 0; i < Math.Min(leftArray.Count, rightArray.Count); i++)
@@ -65,18 +75,17 @@ public sealed class DayThirteen : IDay<int>
         }
 
         // If the left list runs out of items first, the inputs are in the right order.
+        if (leftArray.Count < rightArray.Count)
+        {
+            return true;
+        }
+
         // If the right list runs out of items first, the inputs are not in the right order.
-        if (leftArray.Count < rightArray.Count) { return true; }
-        if (leftArray.Count > rightArray.Count) { return false; }
+        if (leftArray.Count > rightArray.Count)
+        {
+            return false;
+        }
 
         return null;
     }
-
-    public class Packet
-    {
-        public int Number { get; set; }
-
-        public IList<Packet> List { get; set; } = new List<Packet>();
-    }
-
 }

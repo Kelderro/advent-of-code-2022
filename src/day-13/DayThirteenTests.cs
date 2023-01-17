@@ -39,15 +39,15 @@ public class DayThirteenTests
         result.Should().Be(13);
     }
 
-    // [Fact]
-    // public void PartOne_OnAocInputFile_ReturnSumOfIndices()
-    // {
-    //     var fileInput = ReadInput(13);
+    [Fact]
+    public void PartOne_OnAocInputFile_ReturnSumOfIndices()
+    {
+        var fileInput = ReadInput(13);
 
-    // var result = DayThirteen.PartOne(fileInput);
+        var result = DayThirteen.PartOne(fileInput);
 
-    // result.Should().Be(440);
-    // }
+        result.Should().Be(440);
+    }
 
     // [Fact]
     // public void PartTwo_OnExampleTestCase_ReturnFewestStepsRequired()
