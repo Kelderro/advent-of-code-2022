@@ -25,7 +25,7 @@ public class DayNineTests
     }
 
     [Fact]
-    public void PartOne_OnRunningSolution_ReturnPositionsVisitByTail()
+    public void PartOne_OnAocInputFile_ReturnPositionsVisitByTail()
     {
         var input = this.ReadInput(9);
 
@@ -73,7 +73,7 @@ public class DayNineTests
     }
 
     [Fact]
-    public void PartTwo_OnRunningSolution_ReturnPositionsVisitByTail()
+    public void PartTwo_OnAocInputFile_ReturnPositionsVisitByTail()
     {
         var input = this.ReadInput(9);
 
