@@ -163,7 +163,7 @@ public class DayTenTests
     }
 
     [Fact]
-    public void PartOne_OnUsingInputFile_ReturnExpectedSignalStrengthSolution()
+    public void PartOne_OnAocInputFile_ReturnExpectedSignalStrengthSolution()
     {
         var fileInput = ReadInput(10);
 
@@ -221,7 +221,7 @@ public class DayTenTests
     }
 
     [Fact]
-    public void PartTwo_OnUsingInputFile_ReturnCrtScreen()
+    public void PartTwo_OnAocInputFile_ReturnCrtScreen()
     {
         var fileInput = ReadInput(10);
 
