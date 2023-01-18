@@ -8,6 +8,13 @@ using System.Text.Json.Nodes;
 
 public sealed class DayThirteen : IDay<int>
 {
+    private enum SignalOrder
+    {
+        Ordered = -1,
+        Unordered = 0,
+        Undetermined = 1,
+    }
+
     public static int PartOne(string[] lines)
     {
         var pairIndex = 0;
@@ -96,13 +103,4 @@ public sealed class DayThirteen : IDay<int>
 
         return SignalOrder.Undetermined;
     }
-
-    private enum SignalOrder
-    {
-        Ordered = -1,
-        Unordered = 0,
-        Undetermined = 1,
-    }
-
-
 }
