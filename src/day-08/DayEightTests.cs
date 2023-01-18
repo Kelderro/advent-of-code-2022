@@ -22,7 +22,7 @@ public class DayEightTests
     }
 
     [Fact]
-    public void PartOne_OnRunningSolution_ReturnAmountOfVisibleTrees()
+    public void PartOne_OnAocInputFile_ReturnAmountOfVisibleTrees()
     {
         var input = this.ReadInput(8);
 
@@ -40,7 +40,7 @@ public class DayEightTests
     }
 
     [Fact]
-    public void PartTwo_OnRunningSolution_ReturnHighestScenicScore()
+    public void PartTwo_OnAocInputFile_ReturnHighestScenicScore()
     {
         var result = DayEight.PartTwo(this.ReadInput(8));
 
