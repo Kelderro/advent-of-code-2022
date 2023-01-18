@@ -8,13 +8,6 @@ using System.Text.Json.Nodes;
 
 public sealed class DayThirteen : IDay<int>
 {
-    private enum SignalOrder
-    {
-        Ordered = -1,
-        Unordered = 0,
-        Undetermined = 1,
-    }
-
     public static int PartOne(string[] lines)
     {
         var pairIndex = 0;
@@ -22,7 +15,7 @@ public sealed class DayThirteen : IDay<int>
 
         var packets = GetPackets(lines);
 
-        for (var i = 0; i < packets.Count; i = i + 2)
+        for (var i = 0; i < packets.Count; i += 2)
         {
             pairIndex++;
 
@@ -30,7 +23,9 @@ public sealed class DayThirteen : IDay<int>
             var right = packets[i + 1];
 
             var signalOrder = Compare(left, right);
-            if (signalOrder == SignalOrder.Ordered)
+
+            // Check if ordered
+            if (signalOrder == -1)
             {
                 correctPairs += pairIndex;
             }
@@ -42,19 +37,23 @@ public sealed class DayThirteen : IDay<int>
     public static int PartTwo(string[] lines)
     {
         var dividers = GetPackets(new[] { "[[2]]", "[[6]]" });
-        var packets = GetPackets(lines).Concat(dividers).ToList();
+        var packets = GetPackets(lines).Concat(dividers)
+                                       .ToList();
 
-        packets.Sort((left, right) => Compare(left, right) == SignalOrder.Ordered ? -1 : 1);
+        packets.Sort(Compare);
 
         return (packets.IndexOf(dividers[0]) + 1) * (packets.IndexOf(dividers[1]) + 1);
     }
 
     private static IList<JsonNode> GetPackets(string[] input) => input.Where(x => !string.IsNullOrEmpty(x))
-                                                                             .Select(x => JsonNode.Parse(x))
-                                                                             .ToList();
+                                                                        .Select(x => JsonNode.Parse(x))
+                                                                        .ToList();
 
-    private static SignalOrder Compare(JsonNode left, JsonNode right)
+    private static int Compare(JsonNode? left, JsonNode? right)
     {
+        ArgumentNullException.ThrowIfNull(left);
+        ArgumentNullException.ThrowIfNull(right);
+
         // If both values are integers, the lower integer should come first.
         // If the left integer is lower than the right integer, the inputs are in the right order.
         // If the left integer is higher than the right integer, the inputs are not in the right order.
@@ -63,7 +62,7 @@ public sealed class DayThirteen : IDay<int>
         {
             var leftInt = leftVal.GetValue<int>();
             var rightInt = rightVal.GetValue<int>();
-            return leftInt == rightInt ? SignalOrder.Undetermined : leftInt < rightInt ? SignalOrder.Ordered : SignalOrder.Unordered;
+            return leftInt.CompareTo(rightInt);
         }
 
         // If exactly one value is an integer, convert the integer to a list which contains that integer as its only value
@@ -83,24 +82,14 @@ public sealed class DayThirteen : IDay<int>
             var res = Compare(leftArray[i], rightArray[i]);
 
             // Check if comparison makes a decision about the order, continue checking the next part of the input is undetermined.
-            if (res != SignalOrder.Undetermined)
+            if (res != 0)
             {
                 return res;
             }
         }
 
         // If the left list runs out of items first, the inputs are in the right order.
-        if (leftArray.Count < rightArray.Count)
-        {
-            return SignalOrder.Ordered;
-        }
-
         // If the right list runs out of items first, the inputs are not in the right order.
-        if (leftArray.Count > rightArray.Count)
-        {
-            return SignalOrder.Unordered;
-        }
-
-        return SignalOrder.Undetermined;
+        return leftArray.Count.CompareTo(rightArray.Count);
     }
 }
