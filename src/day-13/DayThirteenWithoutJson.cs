@@ -49,6 +49,12 @@ public sealed class DayThirteenWithoutJson : IDay<int>
 
     private class Packet : IComparable<Packet>
     {
+        public static Packet Parse(string input)
+        {
+            var start = 0;
+            return ParseInner(input, ref start);
+        }
+
         public int CompareTo(Packet? other)
         {
             ArgumentNullException.ThrowIfNull(other);
@@ -71,12 +77,6 @@ public sealed class DayThirteenWithoutJson : IDay<int>
             }
 
             return thisAsList.Packets.Count.CompareTo(otherAsList.Packets.Count);
-        }
-
-        public static Packet Parse(string input)
-        {
-            var start = 0;
-            return ParseInner(input, ref start);
         }
 
         private static Packet ParseInner(string input, ref int currentPosition)
