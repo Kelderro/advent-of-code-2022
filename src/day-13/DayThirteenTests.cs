@@ -46,26 +46,27 @@ public class DayThirteenTests
 
         var result = DayThirteen.PartOne(fileInput);
 
-        result.Should().Be(440);
+        result.Should().Be(5852);
     }
 
-    // [Fact]
-    // public void PartTwo_OnExampleTestCase_ReturnFewestStepsRequired()
-    // {
-    //     var result = DayThirteen.PartTwo(this.unitTestInput);
+    [Fact]
+    public void PartTwo_OnExampleTestCase_ReturnFewestStepsRequired()
+    {
+        var result = DayThirteen.PartTwo(this.unitTestInput);
 
-    // result.Should().Be(31);
-    // }
+        result.Should().Be(140);
+    }
 
-    // [Fact]
-    // public void PartTwo_OnAocInputFile_ReturnAmountOfVisibleTrees()
-    // {
-    //     var fileInput = ReadInput(13);
+    [Fact]
+    public void PartTwo_OnAocInputFile_ReturnAmountOfVisibleTrees()
+    {
+        var fileInput = ReadInput(13);
 
-    // var result = DayThirteen.PartTwo(fileInput);
+        var result = DayThirteen.PartTwo(fileInput);
 
-    // result.Should().Be(440);
-    // }
+        result.Should().Be(24190);
+    }
+
     private static string[] ReadInput(int dayNumber)
     {
         return File.ReadAllLines($"./src/day-{dayNumber:00}/input.txt");
