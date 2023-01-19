@@ -63,7 +63,7 @@ public class DayTwelveTests
     }
 
     [Fact]
-    public void PartOne_OnUsingInputFile_ReturnFewestSteps()
+    public void PartOne_OnAocInputFile_ReturnFewestSteps()
     {
         var fileInput = ReadInput(12);
 
@@ -81,7 +81,7 @@ public class DayTwelveTests
     }
 
     [Fact]
-    public void PartTwo_OnUsingInputFile_ReturnFewestSteps()
+    public void PartTwo_OnAocInputFile_ReturnFewestSteps()
     {
         var fileInput = ReadInput(12);
 
