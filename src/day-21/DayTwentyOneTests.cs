@@ -32,7 +32,7 @@ public class DayTwentyOneTests
     }
 
     [Fact]
-    public void PartOne_OnUsingInputFile_ReturnNumberYelledByRootMonkey()
+    public void PartOne_OnAocInputFile_ReturnNumberYelledByRootMonkey()
     {
         var fileInput = ReadInput(21);
 
@@ -156,7 +156,7 @@ public class DayTwentyOneTests
     }
 
     [Fact]
-    public void PartTwo_OnUsingInputFile_ReturnNumberToYell()
+    public void PartTwo_OnAocInputFile_ReturnNumberToYell()
     {
         var fileInput = ReadInput(21);
 

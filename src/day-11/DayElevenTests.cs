@@ -44,7 +44,7 @@ public class DayElevenTests
     }
 
     [Fact]
-    public void PartOne_OnUsingInputFile_ReturnMonkeyBusinessAmount()
+    public void PartOne_OnAocInputFile_ReturnMonkeyBusinessAmount()
     {
         var fileInput = ReadInput(11);
 
@@ -62,7 +62,7 @@ public class DayElevenTests
     }
 
     [Fact]
-    public void PartTwo_OnUsingInputFile_ReturnMonkeyBusinessAmount()
+    public void PartTwo_OnAocInputFile_ReturnMonkeyBusinessAmount()
     {
         var fileInput = ReadInput(11);
 
