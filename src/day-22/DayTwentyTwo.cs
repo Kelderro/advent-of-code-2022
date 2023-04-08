@@ -39,8 +39,9 @@ public sealed class DayTwentyTwo : IDay<int>
         var position = Array.IndexOf(map.Map, '.') - 1;
 
         var rowCount = map.Map.Length / map.ColumnCount;
-
+#if DEBUG
         Console.Clear();
+#endif
         for (var i = 0; i < map.Map.Length; i++)
         {
             if (i % map.ColumnCount == 0 && i != 0)
@@ -50,9 +51,11 @@ public sealed class DayTwentyTwo : IDay<int>
 
             if (map.Map[i] == '#')
             {
+#if DEBUG
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write(map.Map[i]);
                 Console.ResetColor();
+#endif
                 continue;
             }
 
@@ -67,17 +70,18 @@ public sealed class DayTwentyTwo : IDay<int>
             {
                 facing = Turn(p.Turn.Equals('R'), facing);
             }
-
+#if DEBUG
             Console.SetCursorPosition(0, rowCount);
             Console.Write($"\nDirection: {facing.Name}");
+#endif
 
             for (var i = 1; i <= p.Steps; i++)
             {
                 var changeTo = facing.NextPosition(position, map.ColumnCount, rowCount);
-
+#if DEBUG
                 Console.SetCursorPosition(0, rowCount + 2);
                 Console.Write($"Changed from {position} to {changeTo}");
-
+#endif
                 // Check if we hit an empty space
                 while (map.Map[changeTo] == ' ')
                 {
@@ -89,10 +93,10 @@ public sealed class DayTwentyTwo : IDay<int>
                 {
                     break;
                 }
-
+#if DEBUG
                 Console.SetCursorPosition(0, rowCount + 3);
                 Console.WriteLine($"Showing situation after taking {i} steps");
-
+#endif
                 map.Map[changeTo] = facing.Symbol;
                 UpdateMap(map.Map, map.ColumnCount, changeTo);
 
@@ -100,18 +104,21 @@ public sealed class DayTwentyTwo : IDay<int>
                 Thread.Sleep(2);
             }
         }
-
+#if DEBUG
         Console.SetCursorPosition(0, rowCount + 4);
         Console.CursorVisible = true;
+#endif
         return (position, facing);
     }
 
     private static void UpdateMap(char[] map, int columnCount, int changeTo)
     {
+#if DEBUG
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.SetCursorPosition(changeTo % columnCount, changeTo / columnCount);
         Console.Write(map[changeTo]);
         Console.ResetColor();
+#endif
     }
 
     private static int GeneratePassword(int endPosition, int rowLength, Facing facing)
