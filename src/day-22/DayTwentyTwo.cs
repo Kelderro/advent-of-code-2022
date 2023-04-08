@@ -29,8 +29,9 @@ public sealed class DayTwentyTwo : IDay<int>
         {
             facings = CreateFacings();
         }
-
+#if DEBUG
         Console.CursorVisible = false;
+#endif
 
         // Initially, you are facing to the right (from the perspective of how the map is drawn).
         var facing = facings.Single(x => x.Name.Equals("Right", StringComparison.InvariantCultureIgnoreCase));
