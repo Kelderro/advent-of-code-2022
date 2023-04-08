@@ -82,6 +82,7 @@ public sealed class DayTwentyTwo : IDay<int>
                 Console.SetCursorPosition(0, rowCount + 2);
                 Console.Write($"Changed from {position} to {changeTo}");
 #endif
+
                 // Check if we hit an empty space
                 while (map.Map[changeTo] == ' ')
                 {
