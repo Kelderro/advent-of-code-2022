@@ -153,6 +153,7 @@ public sealed class DayTwelve : IDay<int>
 
                 sb.Append(map.Grid[i]);
             }
+            
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine(sb.ToString());
             Console.ResetColor();
