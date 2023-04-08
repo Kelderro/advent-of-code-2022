@@ -17,11 +17,18 @@ Resolve<Aoc.Year2022.Day21.DayTwentyOne, long>(21);
 void Resolve<TDayType, TReturnType>(int dayNumber)
     where TDayType : IDay<TReturnType>
 {
+#if !DEBUG
+    Console.SetOut(TextWriter.Null);
+#endif
     var lines = ReadInput(dayNumber);
 
     var partOneResult = TDayType.PartOne(lines);
     var partTwoResult = TDayType.PartTwo(lines);
-
+#if !DEBUG
+    var standardOutput = new StreamWriter(Console.OpenStandardOutput());
+    standardOutput.AutoFlush = true;
+    Console.SetOut(standardOutput);
+#endif
     PrintToConsole(dayNumber, partOneResult, partTwoResult);
 }
 

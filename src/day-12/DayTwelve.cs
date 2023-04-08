@@ -137,6 +137,7 @@ public sealed class DayTwelve : IDay<int>
 
     private static void PrintMap(HeightMap map)
     {
+#if DEBUG
         try
         {
             Console.Clear();
@@ -168,15 +169,18 @@ public sealed class DayTwelve : IDay<int>
                 throw;
             }
         }
+#endif
     }
 
     private static void ReportShowCellUpdate(int stepNumber, int cellIndex, HeightMap map)
     {
+#if DEBUG
         try
         {
             Console.CursorVisible = false;
             var column = cellIndex % map.ColumnCount;
             var row = (int)Math.Floor((float)cellIndex / map.ColumnCount);
+
             Console.SetCursorPosition(column, row);
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.Write(map.Grid[cellIndex]);
@@ -197,6 +201,7 @@ public sealed class DayTwelve : IDay<int>
                 throw;
             }
         }
+#endif
     }
 
     private static HeightMap CreateHeightMap(string[] lines)
