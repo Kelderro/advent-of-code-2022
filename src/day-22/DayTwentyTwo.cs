@@ -23,7 +23,7 @@ public sealed class DayTwentyTwo : IDay<int>
         throw new NotImplementedException();
     }
 
-    private static (int EndPosition, Facing facing) Walk((char[] Map, int ColumnCount) map, IList<(int Steps, char Turn)> path)
+    private static (int EndPosition, Facing Facing) Walk((char[] Map, int ColumnCount) map, IList<(int Steps, char Turn)> path)
     {
         if (facings == null)
         {
@@ -198,7 +198,7 @@ public sealed class DayTwentyTwo : IDay<int>
         return facings[indexOf];
     }
 
-    private static ((char[] Map, int LineLength), IList<(int Steps, char Turn)>) Parse(string[] lines)
+    private static ((char[] Map, int LineLength) Map, IList<(int Steps, char Turn)> Path) Parse(string[] lines)
     {
         // First part is the map
         // Second part is the path
@@ -217,17 +217,6 @@ public sealed class DayTwentyTwo : IDay<int>
         return (map, path);
     }
 
-    public class Facing
-    {
-        required public string Name { get; init; }
-
-        required public int Score { get; init; }
-
-        required public char Symbol { get; init; }
-
-        required public Func<int, int, int, int> NextPosition { get; init; }
-    }
-
     private static (char[] Map, int LineLength) ParseMap(string[] mapLines)
     {
         var longestMapRow = mapLines.Max(x => x.Length);
@@ -242,6 +231,17 @@ public sealed class DayTwentyTwo : IDay<int>
         }
 
         return (map, longestMapRow);
+    }
+
+    public class Facing
+    {
+        required public string Name { get; init; }
+
+        required public int Score { get; init; }
+
+        required public char Symbol { get; init; }
+
+        required public Func<int, int, int, int> NextPosition { get; init; }
     }
 
     private static IList<(int Steps, char Turn)> ParsePath(string pathLine)
