@@ -233,17 +233,6 @@ public sealed class DayTwentyTwo : IDay<int>
         return (map, longestMapRow);
     }
 
-    public class Facing
-    {
-        required public string Name { get; init; }
-
-        required public int Score { get; init; }
-
-        required public char Symbol { get; init; }
-
-        required public Func<int, int, int, int> NextPosition { get; init; }
-    }
-
     private static IList<(int Steps, char Turn)> ParsePath(string pathLine)
     {
         var path = new List<(int Steps, char Turn)>();
@@ -267,5 +256,16 @@ public sealed class DayTwentyTwo : IDay<int>
         path.Add((int.Parse(steps), turn));
 
         return path;
+    }
+
+    public class Facing
+    {
+        required public string Name { get; init; }
+
+        required public int Score { get; init; }
+
+        required public char Symbol { get; init; }
+
+        required public Func<int, int, int, int> NextPosition { get; init; }
     }
 }
